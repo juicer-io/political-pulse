@@ -363,43 +363,69 @@ if AU:
                 "JLN": "Lambie Network", "KAP": "Katter", "CA": "Centre Alliance", "OTH": "Other"}
     filled_au = sum(1 for x in AUP if x.get("wiki_14d") is not None)
     ranked_au = sorted(AUP, key=lambda x: -(x.get("wiki_14d") or 0))
-    max_au = max((x.get("wiki_14d") or 0) for x in AUP) or 1
-    rows_au = ""
-    for i, x in enumerate(ranked_au):
-        w = x.get("wiki_14d")
-        cell = (f'<div class="num">{fmt(w)} {trend(x.get("wiki_last7"), x.get("wiki_prev7"))}</div>'
-                f'<div class="bar"><i style="width:{round(100 * (w or 0) / max_au)}%"></i></div>') if w is not None \
-               else '<span class="na">data filling</span>'
-        color = AU_COLORS.get(x["party"], IND)
+    board_au = []
+    for x in AUP:
         soc = SOCIAL_AU.get(x["slug"], {})
         tw = soc.get("twitter")
-        twf = XF["followers"].get(tw) if tw else None
-        if tw and twf is not None:
-            xcell = f'<a class="num" href="https://x.com/{tw}" rel="nofollow noopener">{fmt(twf)} &#8599;</a>'
-        elif tw:
-            xcell = f'<a href="https://x.com/{tw}" rel="nofollow noopener">@{tw}</a>'
-        else:
-            xcell = '<span class="na">none listed</span>'
         ba = BSKY_AU.get(x["slug"])
-        bcell = (f'<a class="num" href="https://bsky.app/profile/{ba["handle"]}" rel="nofollow noopener">{fmt(ba["followers"])} &#8599;</a>'
-                 if ba and ba.get("followers") is not None else '<span class="na">none listed</span>')
-        rows_au += f"""<tr><td><span class="na num">{i + 1}</span></td>
-<td><div class="who"><span class="pchip" style="background:{color}">{x["party"][:1]}</span>
-<span class="nm"><b><a href="p/{x["slug"]}.html">{x["name"]}</a></b>
-<span>{AU_NAMES.get(x["party"], x["party"])} &middot; {x["chamber"]}</span></span></div></td><td>{cell}</td>
-<td>{xcell}</td><td>{bcell}</td></tr>"""
+        board_au.append({"slug": x["slug"], "n": x["name"], "pa": x["party"], "ch": x["chamber"],
+                         "w": x.get("wiki_14d"), "wl": x.get("wiki_last7"), "wp": x.get("wiki_prev7"),
+                         "tw": tw, "tf": XF["followers"].get(tw) if tw else None,
+                         "bh": ba["handle"] if ba else None,
+                         "bf": ba.get("followers") if ba else None})
+    au_parties = sorted({x["party"] for x in AUP})
+    au_js = f"""
+<script>
+const DATA = {json.dumps(board_au)};
+const PC = {json.dumps(AU_COLORS)};
+const PN = {json.dumps(AU_NAMES)};
+const fmtn = n => n == null ? null : (n >= 1e6 ? (n/1e6).toFixed(1)+"M" : n >= 1e4 ? Math.round(n/1e3)+"k" : n.toLocaleString());
+let sortKey = "w";
+function render() {{
+  const q = document.getElementById("q").value.toLowerCase();
+  const ch = document.getElementById("ch").value, pa = document.getElementById("pa").value;
+  let rows = DATA.filter(p => (!q || p.n.toLowerCase().includes(q)) && (!ch || p.ch === ch) && (!pa || p.pa === pa));
+  rows.sort((a, b) => (b[sortKey] ?? -1) - (a[sortKey] ?? -1));
+  const mx = Math.max(...DATA.map(p => p.w || 0), 1);
+  document.getElementById("count").textContent = rows.length + " of " + DATA.length + " members";
+  document.getElementById("tbody").innerHTML = rows.map((p, i) => {{
+    const tr = (p.wl && p.wp) ? (() => {{ const pc = Math.round(100 * (p.wl - p.wp) / p.wp);
+      return `<span class="${{pc >= 0 ? "up" : "down"}}">${{pc >= 0 ? "&#9650;" : "&#9660;"}} ${{Math.abs(pc)}}%</span>`; }})() : "";
+    const att = p.w != null ? `<div class="num">${{fmtn(p.w)}} ${{tr}}</div>
+      <div class="bar"><i style="width:${{Math.round(100 * (p.w || 0) / mx)}}%"></i></div>` : `<span class="na">no article</span>`;
+    const x = p.tw ? (p.tf != null
+      ? `<a class="num" href="https://x.com/${{p.tw}}">${{fmtn(p.tf)}} &#8599;</a>`
+      : `<a href="https://x.com/${{p.tw}}">@${{p.tw}}</a>`) : `<span class="na">none listed</span>`;
+    const bs = p.bf != null ? `<a class="num" href="https://bsky.app/profile/${{p.bh}}">${{fmtn(p.bf)}} &#8599;</a>` : `<span class="na">none listed</span>`;
+    return `<tr><td><span class="na num">${{i + 1}}</span></td>
+      <td><div class="who"><span class="pchip" style="background:${{PC[p.pa] || "#5a6b78"}}">${{p.pa[0]}}</span>
+      <span class="nm"><b><a href="p/${{p.slug}}.html">${{p.n}}</a></b><span>${{PN[p.pa] || p.pa}} &middot; ${{p.ch}}</span></span></div></td>
+      <td>${{att}}</td><td>${{x}}</td><td>${{bs}}</td></tr>`;
+  }}).join("");
+}}
+function setSort(k) {{ sortKey = k; render(); }}
+window.addEventListener("DOMContentLoaded", render);
+</script>"""
     legend_au = " ".join(f'<i style="background:{AU_COLORS[k]}"></i> {AU_NAMES[k]}' for k in ("ALP", "LIB", "NAT", "GRN", "PHON", "IND"))
-    pend_au = f" &middot; attention data still filling for {len(AUP) - filled_au} members" if filled_au < len(AUP) else ""
+    pend_au = f" &middot; attention data still filling for {len(AUP) - filled_au} members" if filled_au < len(AUP) - 1 else ""
     au_body = f"""<div class="hero"><h1>Australia: the full Parliament board</h1>
 <p class="sub">Every current member of the 48th Parliament of Australia, both chambers, ranked by public attention.
 One list, every party, identical methodology. No selections, no exclusions.</p>
 <p class="stamp">Updated {GEN} &middot; {len(AUP)} members tracked{pend_au} &middot; <a href="methodology.html">methodology</a></p></div>
+<div class="toolbar">
+<input id="q" type="search" placeholder="Search name&hellip;" oninput="render()">
+<select id="ch" onchange="render()"><option value="">Both chambers</option><option>Senate</option><option>House</option></select>
+<select id="pa" onchange="render()"><option value="">All parties</option>{"".join(f'<option value="{k}">{AU_NAMES.get(k, k)}</option>' for k in au_parties)}</select>
+<span class="count" id="count"></span></div>
 <div class="legend">Party: {legend_au}</div>
 <div class="card tblwrap" style="padding:6px 10px"><table>
-<tr><th>#</th><th>Member</th><th>Wikipedia attention (14d)</th><th>{XH}</th><th>Bluesky followers</th></tr>{rows_au}</table></div>
+<tr><th>#</th><th>Member</th><th class="sort" onclick="setSort('w')">Wikipedia attention 14d &#8597;</th>
+<th class="sort" onclick="setSort('tf')">X followers &#8597;</th><th class="sort" onclick="setSort('bf')">Bluesky followers &#8597;</th></tr>
+<tbody id="tbody"></tbody></table></div>
 <div style="margin-top:16px">{claim_cta()}</div>"""
     (SITE / "australia.html").write_text(page("Australian Parliament attention board",
-        "Every member of the 48th Parliament of Australia ranked by public attention. Open data, by Juicer.", au_body))
+        "Every member of the 48th Parliament of Australia ranked by public attention. Open data, by Juicer.", au_body,
+        extra_head=au_js))
     for x in AUP:
         w = x.get("wiki_14d")
         color = AU_COLORS.get(x["party"], IND)
