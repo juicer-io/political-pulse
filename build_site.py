@@ -171,7 +171,8 @@ verified = sum(1 for p in US["people"] if p.get("bsky_followers"))
 board = [{"slug": p["slug"], "n": p["name"], "pa": p["party"], "st": p.get("state"),
           "ch": p["chamber"], "bg": p.get("bioguide"),
           "w": p.get("wiki_14d"), "wl": p.get("wiki_last7"), "wp": p.get("wiki_prev7"),
-          "bf": p.get("bsky_followers")} for p in US["people"]]
+          "bf": p.get("bsky_followers"),
+          "tw": SOCIAL.get(p.get("bioguide"), {}).get("twitter")} for p in US["people"]]
 states = sorted({p["state"] for p in US["people"] if p.get("state")})
 pend_note = f" &middot; attention data still filling for {pending} members" if pending else ""
 
@@ -199,6 +200,7 @@ function render() {{
       <td><div class="who">${{img}}<span class="pchip" style="background:${{PC[p.pa]}}">${{p.pa}}</span>
       <span class="nm"><b><a href="p/${{p.slug}}.html">${{p.n}}</a></b><span>${{p.ch}} &middot; ${{p.st}}</span></span></div></td>
       <td>${{att}}</td>
+      <td>${{p.tw ? `<a href="https://x.com/${{p.tw}}" rel="nofollow noopener">@${{p.tw}}</a>` : `<span class="na">none listed</span>`}}</td>
       <td>${{p.bf != null ? `<span class="num">${{fmtn(p.bf)}}</span>` : `<span class="na">not verified</span>`}}</td></tr>`;
   }}).join("");
 }}
@@ -220,6 +222,7 @@ Wikipedia attention, week-over-week movement and verified Bluesky reach. Both pa
 <i style="background:{IND}"></i> Independent</div>
 <div class="card tblwrap" style="padding:6px 10px"><table>
 <tr><th>#</th><th>Member</th><th class="sort" onclick="setSort('w')">Wikipedia attention 14d &#8597;</th>
+<th>X account</th>
 <th class="sort" onclick="setSort('bf')">Bluesky followers &#8597;</th></tr>
 <tbody id="tbody"></tbody></table></div>
 <h2>2026 spotlight races</h2>
