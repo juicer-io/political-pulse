@@ -171,7 +171,7 @@ verified = sum(1 for p in US["people"] if p.get("bsky_followers"))
 board = [{"slug": p["slug"], "n": p["name"], "pa": p["party"], "st": p.get("state"),
           "ch": p["chamber"], "bg": p.get("bioguide"),
           "w": p.get("wiki_14d"), "wl": p.get("wiki_last7"), "wp": p.get("wiki_prev7"),
-          "bf": p.get("bsky_followers"),
+          "bf": p.get("bsky_followers"), "bh": p.get("bsky"),
           "tw": SOCIAL.get(p.get("bioguide"), {}).get("twitter")} for p in US["people"]]
 states = sorted({p["state"] for p in US["people"] if p.get("state")})
 pend_note = f" &middot; attention data still filling for {pending} members" if pending else ""
@@ -201,7 +201,7 @@ function render() {{
       <span class="nm"><b><a href="p/${{p.slug}}.html">${{p.n}}</a></b><span>${{p.ch}} &middot; ${{p.st}}</span></span></div></td>
       <td>${{att}}</td>
       <td>${{p.tw ? `<a href="https://x.com/${{p.tw}}" rel="nofollow noopener">@${{p.tw}}</a>` : `<span class="na">none listed</span>`}}</td>
-      <td>${{p.bf != null ? `<span class="num">${{fmtn(p.bf)}}</span>` : `<span class="na">not verified</span>`}}</td></tr>`;
+      <td>${{p.bf != null ? `<a class="num" href="https://bsky.app/profile/${{p.bh}}" rel="nofollow noopener">${{fmtn(p.bf)}} &#8599;</a>` : `<span class="na">not verified</span>`}}</td></tr>`;
   }}).join("");
 }}
 function setSort(k) {{ sortKey = k; render(); }}
