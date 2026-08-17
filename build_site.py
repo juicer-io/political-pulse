@@ -149,7 +149,10 @@ for p in ranked:
 index_body = f"""<div class="hero"><h1>Who is America talking about?</h1>
 <p class="sub">A live attention leaderboard for the 2026 Senate midterms, built from open data:
 news coverage volume and tone, Wikipedia attention and verified Bluesky presence. Both parties, one methodology, no predictions.</p>
-<p class="stamp">Updated {D["generated_at"]} &middot; 8 politicians tracked in the pilot &middot; <a href="methodology.html">full methodology</a></p></div>
+<p class="stamp">Updated {D["generated_at"]} &middot; <a href="methodology.html">full methodology</a></p>
+<p class="stamp"><b>Why these 8:</b> the pilot covers the three marquee Senate races of the 2026 cycle:
+both nominees in the Michigan and North Carolina open seats, and the four most prominent incumbents defending
+their seats this November (Ossoff, Collins, Cornyn, Graham). Four Democrats, four Republicans. The full Senate class is next.</p></div>
 <h2>Attention leaderboard</h2>
 <div class="legend">Party: <i style="background:{DEM}"></i> Democratic <i style="background:{REP}"></i> Republican
 &middot; sorted by Wikipedia attention, last 14 days</div>
@@ -262,8 +265,12 @@ A neutral, party-agnostic proxy for public curiosity.</p>
 parody and fan accounts are excluded, which is why several politicians correctly show as absent.</p>
 <h2>What this is not</h2>
 <p>Attention is not support. Coverage tone is not sentiment about the politician from voters. Nothing here predicts election
-outcomes, and no metric is adjusted differently by party. This pilot tracks 8 politicians in 3 marquee 2026 Senate races
-and refreshes weekly.</p>
+outcomes, and no metric is adjusted differently by party. </p>
+<h2>Why these 8 politicians</h2>
+<p>The pilot deliberately covers the three highest-profile Senate contests of the 2026 midterm cycle:
+the Michigan open seat (both nominees), the North Carolina open seat (both nominees) and the four most prominent
+incumbents on the ballot this November. The selection is balanced at four Democrats and four Republicans by design.
+Expanding to the full 2026 Senate class and beyond is the roadmap; nobody is included or excluded for editorial reasons.</p>
 <h2>Who built this</h2>
 <p>Political Pulse is a project by <a href="https://www.juicer.io/?utm_source=political-pulse">Juicer</a>, the social feed
 platform that senators, parliaments, city governments and campaigns use to show their live social media on their websites.

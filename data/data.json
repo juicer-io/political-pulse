@@ -156,7 +156,11 @@
    ],
    "wiki_14d": 20680,
    "wiki_last7": 11843,
-   "wiki_prev7": 8837
+   "wiki_prev7": 8837,
+   "news_tone_avg": -1.87,
+   "news_articles_28d": 1255,
+   "news_last7": 40,
+   "news_prev7": 514
   },
   {
    "slug": "john-cornyn",
@@ -527,7 +531,11 @@
      "reposts": 3415,
      "date": "2026-08-14"
     }
-   ]
+   ],
+   "news_articles_28d": 4652,
+   "news_last7": 994,
+   "news_prev7": 2580,
+   "news_tone_avg": -0.94
   },
   {
    "slug": "mike-rogers",
