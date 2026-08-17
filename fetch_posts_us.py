@@ -17,7 +17,10 @@ def get(url, auth=False):
 people = json.load(open(ROOT / "people_us_full.json"))
 social = json.load(open(ROOT / "data/social_us.json"))
 bsky = json.load(open(ROOT / "data/bsky_us.json"))
-scope = [p for p in people if p["chamber"] == "Senate" or "--house" in sys.argv]
+# Bluesky walls for ALL members (free); X posts skipped until the Data API
+# posts-by-username gap is fixed (returns 0 items despite success:true, 2026-08-17)
+scope = people
+SKIP_X = "--with-x" not in sys.argv
 PATH = ROOT / "data/posts_us.json"
 out = json.load(open(PATH)) if PATH.exists() else {}
 calls = 0
@@ -25,7 +28,7 @@ for p in scope:
     if p["slug"] in out: continue
     posts = []
     tw = social.get(p["bioguide"], {}).get("twitter")
-    if tw:
+    if tw and not SKIP_X:
         try:
             r = get("https://api.juicer.io/v1/data/posts?platforms=Twitter&term=" + urllib.parse.quote(tw), auth=True)
             calls += 1
