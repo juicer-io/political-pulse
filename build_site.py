@@ -140,8 +140,7 @@ def page(title, desc, body, depth=0, extra_head=""):
 <title>{title}</title><meta name="description" content="{desc}">
 <style>{CSS}</style>{extra_head}</head><body>
 <div class="top"><div class="wrap"><b><a href="{pre}index.html">Political Pulse</a></b>
-<a href="{pre}index.html">Congress</a> <a href="{pre}race-michigan.html">2026: Michigan</a>
-<a href="{pre}race-north-carolina.html">2026: North Carolina</a> <a href="{pre}australia.html">Australia</a>
+<a href="{pre}index.html">US Congress</a> <a href="{pre}australia.html">Australia</a>
 <a href="{pre}methodology.html">Methodology</a>
 <a class="pj" href="https://www.juicer.io/?utm_source=political-pulse&utm_medium=referral">Powered by Juicer</a></div></div>
 <div class="wrap">{body}</div>
@@ -220,6 +219,8 @@ Wikipedia attention, week-over-week movement and verified Bluesky reach. Both pa
 <th class="sort" onclick="setSort('bf')">Bluesky followers &#8597;</th></tr>
 <tbody id="tbody"></tbody></table></div>
 <h2>2026 spotlight races</h2>
+<p class="sub" style="margin-bottom:12px">The two open-seat Senate battles of this November's midterms, tracked candidate
+versus candidate with news coverage volume and tone on top of the attention metrics.</p>
 <div class="grid2">
 <a class="card" href="race-michigan.html"><b>Michigan Senate, open seat</b><br>Abdul El-Sayed (D) vs Mike Rogers (R), with news volume and tone</a>
 <a class="card" href="race-north-carolina.html"><b>North Carolina Senate, open seat</b><br>Roy Cooper (D) vs Michael Whatley (R), with news volume and tone</a></div>
