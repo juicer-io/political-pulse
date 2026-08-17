@@ -145,7 +145,11 @@ def page(title, desc, body, depth=0, extra_head=""):
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title><meta name="description" content="{desc}">
-<style>{CSS}</style>{extra_head}</head><body>
+<style>{CSS}</style>{extra_head}
+<script>document.addEventListener("click", function(e) {{
+  var a = e.target.closest("a");
+  if (a && a.host && a.host !== location.host) {{ a.target = "_blank"; a.rel = "noopener"; }}
+}});</script></head><body>
 <div class="top"><div class="wrap"><b><a href="{pre}index.html">Political Pulse</a></b>
 <a href="{pre}index.html">US Congress</a> <a href="{pre}australia.html">Australia</a>
 <a href="{pre}methodology.html">Methodology</a>
