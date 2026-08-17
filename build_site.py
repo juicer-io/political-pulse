@@ -430,6 +430,8 @@ name matches the politician; Australian accounts come from each politician's Wik
 excluded, which is why many politicians correctly show as absent.</p>
 <p><b>Account handles.</b> US X, Instagram, Facebook and YouTube handles come from the public domain
 unitedstates/congress-legislators social media dataset. Australian X and Bluesky handles come from Wikidata.</p>
+<p><b>X follower counts.</b> Retrieved through the <a href="https://developers.juicer.io/?utm_source=political-pulse">Juicer
+Data API</a> profiles endpoint, exact handle matches only. Yes, the same API powers this page and is available to anyone.</p>
 <p><b>News volume and tone</b> (spotlight races). GDELT DOC 2.0 API, raw article count over 28 days and average document tone.
 Ambiguous names carry a disambiguating term. Tone is a linguistic measure of coverage, not public opinion.</p>
 <p><b>Photos.</b> Official congressional photos from the public domain unitedstates/images collection.</p>
