@@ -19,6 +19,7 @@ US = json.load(open(ROOT / "data/data_us_full.json")) if (ROOT / "data/data_us_f
 AU = json.load(open(ROOT / "data/data_au.json")) if (ROOT / "data/data_au.json").exists() else None
 BSKY = json.load(open(ROOT / "data/bsky_us.json")) if (ROOT / "data/bsky_us.json").exists() else {}
 SOCIAL = json.load(open(ROOT / "data/social_us.json")) if (ROOT / "data/social_us.json").exists() else {}
+XF = json.load(open(ROOT / "data/x_followers.json")) if (ROOT / "data/x_followers.json").exists() else {"followers": {}}
 GEN = "2026-08-17"
 
 INK, INK2, INK3 = "#16283a", "#4d6178", "#8195a8"
@@ -172,7 +173,8 @@ board = [{"slug": p["slug"], "n": p["name"], "pa": p["party"], "st": p.get("stat
           "ch": p["chamber"], "bg": p.get("bioguide"),
           "w": p.get("wiki_14d"), "wl": p.get("wiki_last7"), "wp": p.get("wiki_prev7"),
           "bf": p.get("bsky_followers"), "bh": p.get("bsky"),
-          "tw": SOCIAL.get(p.get("bioguide"), {}).get("twitter")} for p in US["people"]]
+          "tw": SOCIAL.get(p.get("bioguide"), {}).get("twitter"),
+          "tf": XF["followers"].get(SOCIAL.get(p.get("bioguide"), {}).get("twitter") or "")} for p in US["people"]]
 states = sorted({p["state"] for p in US["people"] if p.get("state")})
 pend_note = f" &middot; attention data still filling for {pending} members" if pending else ""
 
@@ -200,7 +202,9 @@ function render() {{
       <td><div class="who">${{img}}<span class="pchip" style="background:${{PC[p.pa]}}">${{p.pa}}</span>
       <span class="nm"><b><a href="p/${{p.slug}}.html">${{p.n}}</a></b><span>${{p.ch}} &middot; ${{p.st}}</span></span></div></td>
       <td>${{att}}</td>
-      <td>${{p.tw ? `<a href="https://x.com/${{p.tw}}" rel="nofollow noopener">@${{p.tw}}</a>` : `<span class="na">none listed</span>`}}</td>
+      <td>${{p.tw ? (p.tf != null
+        ? `<a class="num" href="https://x.com/${{p.tw}}" rel="nofollow noopener">${{fmtn(p.tf)}} &#8599;</a>`
+        : `<a href="https://x.com/${{p.tw}}" rel="nofollow noopener">@${{p.tw}}</a>`) : `<span class="na">none listed</span>`}}</td>
       <td>${{p.bf != null ? `<a class="num" href="https://bsky.app/profile/${{p.bh}}" rel="nofollow noopener">${{fmtn(p.bf)}} &#8599;</a>` : `<span class="na">not verified</span>`}}</td></tr>`;
   }}).join("");
 }}
@@ -222,7 +226,7 @@ Wikipedia attention, week-over-week movement and verified Bluesky reach. Both pa
 <i style="background:{IND}"></i> Independent</div>
 <div class="card tblwrap" style="padding:6px 10px"><table>
 <tr><th>#</th><th>Member</th><th class="sort" onclick="setSort('w')">Wikipedia attention 14d &#8597;</th>
-<th>X account</th>
+<th class="sort" onclick="setSort('tf')">X followers &#8597;</th>
 <th class="sort" onclick="setSort('bf')">Bluesky followers &#8597;</th></tr>
 <tbody id="tbody"></tbody></table></div>
 <h2>2026 spotlight races</h2>
