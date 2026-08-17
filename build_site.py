@@ -339,7 +339,36 @@ for p in US["people"]:
                    f'<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">{"".join(links)}</div>'
                    f'<p class="na" style="margin-top:10px">One person, {len(links)} platforms. Juicer merges all of them into a single live feed for a website.</p></div>')
     posts = ""
-    if p.get("bsky_top_posts"):
+    wall_posts = POSTS.get(p["slug"]) or []
+    if wall_posts:
+        cards = ""
+        for wpost in wall_posts:
+            eng = " &middot; ".join(f"{v:,} {k}" for k, v in
+                                    (("likes", wpost.get("likes")), ("replies", wpost.get("comments")),
+                                     ("shares", wpost.get("shares"))) if v is not None)
+            cards += (f'<a class="wcard" href="{wpost["url"]}"><span class="plat">{wpost["platform"]} &middot; {wpost["date"]}</span>'
+                      f'<span class="txt">{(wpost["text"] or "").replace("<", "&lt;")[:240]}</span>'
+                      f'<span class="eng">{eng}</span></a>')
+        has_x = any(w["platform"] == "X" for w in wall_posts)
+        badge = ('<span class="pjbadge">powered by the Juicer API</span>' if has_x
+                 else '<span class="pjbadge">via the open Bluesky network</span>')
+        src_line = "their official X and Bluesky accounts" if has_x else "their verified Bluesky account"
+        handles_list = []
+        if soc.get("twitter"): handles_list.append(("X", "@" + soc["twitter"]))
+        if p.get("bsky"): handles_list.append(("Bluesky", p["bsky"]))
+        if soc.get("instagram"): handles_list.append(("Instagram", "@" + soc["instagram"]))
+        chips = "".join(f'<code style="background:rgba(255,255,255,.12);border-radius:6px;padding:3px 8px;margin-right:8px;font-size:13px">{plat}: {h}</code>'
+                        for plat, h in handles_list)
+        signup = (f"https://www.juicer.io/sign-up?utm_source=political-pulse&utm_medium=referral"
+                  f"&utm_campaign=wall-embed&utm_content={p['slug']}")
+        embed_cta = f"""<div class="card cta" style="margin-top:16px"><h3>Get this wall on your website</h3>
+<p>This exact feed, live and auto-updating, embeddable on any site. Create a free Juicer account,
+add {p["name"].split()[-1]}'s official accounts as sources and paste one line of embed code. About five minutes.</p>
+<p style="margin-top:10px">{chips}</p>
+<a class="btn" href="{signup}">Create your free Juicer account</a></div>"""
+        posts = (f'<h2>Latest posts {badge}</h2><div class="wall">{cards}</div>'
+                 f'<p class="na">Newest posts from {src_line}. Swipe to browse.</p>' + embed_cta)
+    elif p.get("bsky_top_posts"):
         items = "".join(f'<div class="post">{t["text"]}<div class="m">{t["date"]} &middot; {t["likes"]:,} likes &middot; {t["reposts"]:,} reposts</div></div>'
                         for t in p["bsky_top_posts"])
         posts = f'<h2>Most liked recent Bluesky posts</h2>{items}'
