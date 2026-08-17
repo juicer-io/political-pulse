@@ -20,6 +20,8 @@ AU = json.load(open(ROOT / "data/data_au.json")) if (ROOT / "data/data_au.json")
 BSKY = json.load(open(ROOT / "data/bsky_us.json")) if (ROOT / "data/bsky_us.json").exists() else {}
 SOCIAL = json.load(open(ROOT / "data/social_us.json")) if (ROOT / "data/social_us.json").exists() else {}
 XF = json.load(open(ROOT / "data/x_followers.json")) if (ROOT / "data/x_followers.json").exists() else {"followers": {}}
+SOCIAL_AU = json.load(open(ROOT / "data/social_au.json")) if (ROOT / "data/social_au.json").exists() else {}
+BSKY_AU = json.load(open(ROOT / "data/bsky_au.json")) if (ROOT / "data/bsky_au.json").exists() else {}
 GEN = "2026-08-17"
 
 INK, INK2, INK3 = "#16283a", "#4d6178", "#8195a8"
@@ -364,10 +366,23 @@ if AU:
                 f'<div class="bar"><i style="width:{round(100 * (w or 0) / max_au)}%"></i></div>') if w is not None \
                else '<span class="na">data filling</span>'
         color = AU_COLORS.get(x["party"], IND)
+        soc = SOCIAL_AU.get(x["slug"], {})
+        tw = soc.get("twitter")
+        twf = XF["followers"].get(tw) if tw else None
+        if tw and twf is not None:
+            xcell = f'<a class="num" href="https://x.com/{tw}" rel="nofollow noopener">{fmt(twf)} &#8599;</a>'
+        elif tw:
+            xcell = f'<a href="https://x.com/{tw}" rel="nofollow noopener">@{tw}</a>'
+        else:
+            xcell = '<span class="na">none listed</span>'
+        ba = BSKY_AU.get(x["slug"])
+        bcell = (f'<a class="num" href="https://bsky.app/profile/{ba["handle"]}" rel="nofollow noopener">{fmt(ba["followers"])} &#8599;</a>'
+                 if ba and ba.get("followers") is not None else '<span class="na">none listed</span>')
         rows_au += f"""<tr><td><span class="na num">{i + 1}</span></td>
 <td><div class="who"><span class="pchip" style="background:{color}">{x["party"][:1]}</span>
 <span class="nm"><b><a href="p/{x["slug"]}.html">{x["name"]}</a></b>
-<span>{AU_NAMES.get(x["party"], x["party"])} &middot; {x["chamber"]}</span></span></div></td><td>{cell}</td></tr>"""
+<span>{AU_NAMES.get(x["party"], x["party"])} &middot; {x["chamber"]}</span></span></div></td><td>{cell}</td>
+<td>{xcell}</td><td>{bcell}</td></tr>"""
     legend_au = " ".join(f'<i style="background:{AU_COLORS[k]}"></i> {AU_NAMES[k]}' for k in ("ALP", "LIB", "NAT", "GRN", "PHON", "IND"))
     pend_au = f" &middot; attention data still filling for {len(AUP) - filled_au} members" if filled_au < len(AUP) else ""
     au_body = f"""<div class="hero"><h1>Australia: the full Parliament board</h1>
@@ -376,7 +391,7 @@ One list, every party, identical methodology. No selections, no exclusions.</p>
 <p class="stamp">Updated {GEN} &middot; {len(AUP)} members tracked{pend_au} &middot; <a href="methodology.html">methodology</a></p></div>
 <div class="legend">Party: {legend_au}</div>
 <div class="card tblwrap" style="padding:6px 10px"><table>
-<tr><th>#</th><th>Member</th><th>Wikipedia attention (14d)</th></tr>{rows_au}</table></div>
+<tr><th>#</th><th>Member</th><th>Wikipedia attention (14d)</th><th>X</th><th>Bluesky followers</th></tr>{rows_au}</table></div>
 <div style="margin-top:16px">{claim_cta()}</div>"""
     (SITE / "australia.html").write_text(page("Australian Parliament attention board",
         "Every member of the 48th Parliament of Australia ranked by public attention. Open data, by Juicer.", au_body))
@@ -409,8 +424,11 @@ reasons. The two 2026 spotlight race pages add news metrics for the highest-prof
 <h2>Sources</h2>
 <p><b>Wikipedia attention.</b> Wikimedia Pageviews API, user pageviews of each politician's English Wikipedia article
 over 14 days. A neutral, party-agnostic proxy for public curiosity.</p>
-<p><b>Bluesky.</b> Public AT Protocol appview. Only accounts with a valid platform verification whose display name matches
-the politician are counted; parody and fan accounts are excluded, which is why many politicians correctly show as absent.</p>
+<p><b>Bluesky.</b> Public AT Protocol appview. US accounts are counted only with a valid platform verification whose display
+name matches the politician; Australian accounts come from each politician's Wikidata entry. Parody and fan accounts are
+excluded, which is why many politicians correctly show as absent.</p>
+<p><b>Account handles.</b> US X, Instagram, Facebook and YouTube handles come from the public domain
+unitedstates/congress-legislators social media dataset. Australian X and Bluesky handles come from Wikidata.</p>
 <p><b>News volume and tone</b> (spotlight races). GDELT DOC 2.0 API, raw article count over 28 days and average document tone.
 Ambiguous names carry a disambiguating term. Tone is a linguistic measure of coverage, not public opinion.</p>
 <p><b>Photos.</b> Official congressional photos from the public domain unitedstates/images collection.</p>

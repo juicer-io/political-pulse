@@ -12,8 +12,14 @@ TOKEN = os.environ.get("X_BEARER_TOKEN")
 if not TOKEN:
     raise SystemExit("X_BEARER_TOKEN not set. Create an app at developer.x.com, then: "
                      "X_BEARER_TOKEN=... python3 fetch_x_followers.py")
-social = json.load(open(ROOT + "/data/social_us.json"))
-handles = sorted({v["twitter"] for v in social.values() if v.get("twitter")})
+handles = set()
+for f in ("social_us.json", "social_au.json"):
+    try:
+        social = json.load(open(ROOT + "/data/" + f))
+        handles |= {v["twitter"] for v in social.values() if v.get("twitter")}
+    except FileNotFoundError:
+        pass
+handles = sorted(handles)
 PATH = ROOT + "/data/x_followers.json"
 try: out = json.load(open(PATH))
 except FileNotFoundError: out = {"as_of": None, "followers": {}}
