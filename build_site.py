@@ -179,6 +179,7 @@ board = [{"slug": p["slug"], "n": p["name"], "pa": p["party"], "st": p.get("stat
           "tf": XF["followers"].get(SOCIAL.get(p.get("bioguide"), {}).get("twitter") or "")} for p in US["people"]]
 states = sorted({p["state"] for p in US["people"] if p.get("state")})
 pend_note = f" &middot; attention data still filling for {pending} members" if pending else ""
+XH = "X followers &#8597;" if XF["followers"] else "X account"
 
 board_js = f"""
 <script>
@@ -228,7 +229,7 @@ Wikipedia attention, week-over-week movement and verified Bluesky reach. Both pa
 <i style="background:{IND}"></i> Independent</div>
 <div class="card tblwrap" style="padding:6px 10px"><table>
 <tr><th>#</th><th>Member</th><th class="sort" onclick="setSort('w')">Wikipedia attention 14d &#8597;</th>
-<th class="sort" onclick="setSort('tf')">X followers &#8597;</th>
+<th class="sort" onclick="setSort('tf')" title="Follower counts activate once X API access is configured">{XH}</th>
 <th class="sort" onclick="setSort('bf')">Bluesky followers &#8597;</th></tr>
 <tbody id="tbody"></tbody></table></div>
 <h2>2026 spotlight races</h2>
@@ -391,7 +392,7 @@ One list, every party, identical methodology. No selections, no exclusions.</p>
 <p class="stamp">Updated {GEN} &middot; {len(AUP)} members tracked{pend_au} &middot; <a href="methodology.html">methodology</a></p></div>
 <div class="legend">Party: {legend_au}</div>
 <div class="card tblwrap" style="padding:6px 10px"><table>
-<tr><th>#</th><th>Member</th><th>Wikipedia attention (14d)</th><th>X</th><th>Bluesky followers</th></tr>{rows_au}</table></div>
+<tr><th>#</th><th>Member</th><th>Wikipedia attention (14d)</th><th>{XH}</th><th>Bluesky followers</th></tr>{rows_au}</table></div>
 <div style="margin-top:16px">{claim_cta()}</div>"""
     (SITE / "australia.html").write_text(page("Australian Parliament attention board",
         "Every member of the 48th Parliament of Australia ranked by public attention. Open data, by Juicer.", au_body))
