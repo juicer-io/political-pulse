@@ -10,24 +10,7 @@ def get(url):
     req = urllib.request.Request(url, headers=UA)
     return json.load(urllib.request.urlopen(req, timeout=25))
 
-PEOPLE = [
-  dict(slug="jon-ossoff", name="Jon Ossoff", party="D", state="GA", role="Incumbent Senator",
-       race="Georgia Senate", wiki="Jon_Ossoff", gdelt='"Jon Ossoff"', bsky="ossoff.bsky.social", bioguide="O000174"),
-  dict(slug="susan-collins", name="Susan Collins", party="R", state="ME", role="Incumbent Senator",
-       race="Maine Senate", wiki="Susan_Collins", gdelt='"Susan Collins" senator', bsky=None, bioguide="C001035"),
-  dict(slug="john-cornyn", name="John Cornyn", party="R", state="TX", role="Incumbent Senator",
-       race="Texas Senate", wiki="John_Cornyn", gdelt='"John Cornyn"', bsky=None, bioguide="C001056"),
-  dict(slug="lindsey-graham", name="Lindsey Graham", party="R", state="SC", role="Incumbent Senator",
-       race="South Carolina Senate", wiki="Lindsey_Graham", gdelt='"Lindsey Graham"', bsky=None, bioguide="G000359"),
-  dict(slug="roy-cooper", name="Roy Cooper", party="D", state="NC", role="Candidate, former Governor",
-       race="North Carolina Senate", wiki="Roy_Cooper", gdelt='"Roy Cooper"', bsky="roycoopernc.bsky.social", bioguide=None),
-  dict(slug="michael-whatley", name="Michael Whatley", party="R", state="NC", role="Candidate, former RNC Chair",
-       race="North Carolina Senate", wiki="Michael_Whatley", gdelt='"Michael Whatley"', bsky=None, bioguide=None),
-  dict(slug="abdul-el-sayed", name="Abdul El-Sayed", party="D", state="MI", role="Candidate",
-       race="Michigan Senate", wiki="Abdul_El-Sayed", gdelt='"Abdul El-Sayed"', bsky="abdulelsayed.bsky.social", bioguide=None),
-  dict(slug="mike-rogers", name="Mike Rogers", party="R", state="MI", role="Candidate, former Congressman",
-       race="Michigan Senate", wiki="Mike_Rogers_(Michigan_politician)", gdelt='"Mike Rogers" michigan', bsky=None, bioguide=None),
-]
+PEOPLE = json.load(open(__file__.rsplit('/', 1)[0] + "/people.json"))
 
 end = date(2026, 8, 16); start = end - timedelta(days=13)
 out = {"generated_at": "2026-08-17", "window": {"news_days": 28, "wiki_days": 14}, "people": []}

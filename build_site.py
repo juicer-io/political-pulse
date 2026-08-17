@@ -3,10 +3,17 @@
 import json
 from pathlib import Path
 
+import urllib.request
 ROOT = Path(__file__).resolve().parent
 D = json.load(open(ROOT / "data/data.json"))
 PEOPLE = D["people"]
 SITE = ROOT / "site"
+(SITE / "p").mkdir(parents=True, exist_ok=True)
+(SITE / "img").mkdir(exist_ok=True)
+for _p in PEOPLE:
+    bg = _p.get("bioguide")
+    if bg and not (SITE / "img" / f"{bg}.jpg").exists():
+        urllib.request.urlretrieve(f"https://unitedstates.github.io/images/congress/225x275/{bg}.jpg", SITE / "img" / f"{bg}.jpg")
 
 INK, INK2, INK3 = "#16283a", "#4d6178", "#8195a8"
 DEM, REP = "#2457c5", "#c03434"

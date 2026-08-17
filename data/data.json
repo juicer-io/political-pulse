@@ -89,7 +89,11 @@
      "reposts": 437,
      "date": "2026-08-12"
     }
-   ]
+   ],
+   "news_tone_avg": -1.76,
+   "news_articles_28d": 585,
+   "news_last7": 72,
+   "news_prev7": 142
   },
   {
    "slug": "susan-collins",
@@ -278,7 +282,10 @@
    ],
    "wiki_14d": 102568,
    "wiki_last7": 64942,
-   "wiki_prev7": 37626
+   "wiki_prev7": 37626,
+   "news_articles_28d": 5319,
+   "news_last7": 710,
+   "news_prev7": 979
   },
   {
    "slug": "roy-cooper",
@@ -364,7 +371,11 @@
      "reposts": 21,
      "date": "2026-07-13"
     }
-   ]
+   ],
+   "news_tone_avg": -0.68,
+   "news_articles_28d": 259,
+   "news_last7": 53,
+   "news_prev7": 32
   },
   {
    "slug": "michael-whatley",
@@ -427,7 +438,10 @@
    ],
    "wiki_14d": 9992,
    "wiki_last7": 5975,
-   "wiki_prev7": 4017
+   "wiki_prev7": 4017,
+   "news_articles_28d": 169,
+   "news_last7": 32,
+   "news_prev7": 18
   },
   {
    "slug": "abdul-el-sayed",
@@ -578,7 +592,8 @@
    ],
    "wiki_14d": 212703,
    "wiki_last7": 76359,
-   "wiki_prev7": 136344
+   "wiki_prev7": 136344,
+   "news_tone_avg": -0.5
   }
  ]
 }
