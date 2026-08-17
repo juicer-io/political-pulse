@@ -1,0 +1,584 @@
+{
+ "generated_at": "2026-08-17",
+ "window": {
+  "news_days": 28,
+  "wiki_days": 14
+ },
+ "people": [
+  {
+   "slug": "jon-ossoff",
+   "name": "Jon Ossoff",
+   "party": "D",
+   "state": "GA",
+   "role": "Incumbent Senator",
+   "race": "Georgia Senate",
+   "wiki": "Jon_Ossoff",
+   "gdelt": "\"Jon Ossoff\"",
+   "bsky": "ossoff.bsky.social",
+   "bioguide": "O000174",
+   "news_error": "HTTP Error 429: Too Many Requests",
+   "tone_error": "HTTP Error 429: Too Many Requests",
+   "wiki_daily": [
+    [
+     "20260803",
+     11124
+    ],
+    [
+     "20260804",
+     9103
+    ],
+    [
+     "20260805",
+     9680
+    ],
+    [
+     "20260806",
+     10436
+    ],
+    [
+     "20260807",
+     10841
+    ],
+    [
+     "20260808",
+     8162
+    ],
+    [
+     "20260809",
+     8761
+    ],
+    [
+     "20260810",
+     10690
+    ],
+    [
+     "20260811",
+     8886
+    ],
+    [
+     "20260812",
+     7899
+    ],
+    [
+     "20260813",
+     13453
+    ]
+   ],
+   "wiki_14d": 109035,
+   "wiki_last7": 68692,
+   "wiki_prev7": 40343,
+   "bsky_followers": 54950,
+   "bsky_avg_likes": 1019,
+   "bsky_avg_reposts": 298,
+   "bsky_top_posts": [
+    {
+     "text": "",
+     "likes": 9138,
+     "reposts": 1799,
+     "date": "2026-07-14"
+    },
+    {
+     "text": "",
+     "likes": 3631,
+     "reposts": 1217,
+     "date": "2026-07-14"
+    },
+    {
+     "text": "Donald Trump and Mike Collins want to pay your tax dollars to violent thugs who ransacked the Capitol to undermine our elections and attacked police officers on January 6th. Georgians will vote accordingly.",
+     "likes": 1360,
+     "reposts": 437,
+     "date": "2026-08-12"
+    }
+   ]
+  },
+  {
+   "slug": "susan-collins",
+   "name": "Susan Collins",
+   "party": "R",
+   "state": "ME",
+   "role": "Incumbent Senator",
+   "race": "Maine Senate",
+   "wiki": "Susan_Collins",
+   "gdelt": "\"Susan Collins\" senator",
+   "bsky": null,
+   "bioguide": "C001035",
+   "news_error": "HTTP Error 429: Too Many Requests",
+   "tone_error": "HTTP Error 429: Too Many Requests",
+   "wiki_daily": [
+    [
+     "20260803",
+     1944
+    ],
+    [
+     "20260804",
+     1916
+    ],
+    [
+     "20260805",
+     2894
+    ],
+    [
+     "20260806",
+     2083
+    ],
+    [
+     "20260807",
+     2168
+    ],
+    [
+     "20260808",
+     2487
+    ],
+    [
+     "20260809",
+     1583
+    ],
+    [
+     "20260810",
+     1480
+    ],
+    [
+     "20260811",
+     1114
+    ],
+    [
+     "20260812",
+     1277
+    ],
+    [
+     "20260813",
+     1734
+    ]
+   ],
+   "wiki_14d": 20680,
+   "wiki_last7": 11843,
+   "wiki_prev7": 8837
+  },
+  {
+   "slug": "john-cornyn",
+   "name": "John Cornyn",
+   "party": "R",
+   "state": "TX",
+   "role": "Incumbent Senator",
+   "race": "Texas Senate",
+   "wiki": "John_Cornyn",
+   "gdelt": "\"John Cornyn\"",
+   "bsky": null,
+   "bioguide": "C001056",
+   "news_error": "HTTP Error 429: Too Many Requests",
+   "tone_error": "HTTP Error 429: Too Many Requests",
+   "wiki_daily": [
+    [
+     "20260803",
+     2189
+    ],
+    [
+     "20260804",
+     3453
+    ],
+    [
+     "20260805",
+     2291
+    ],
+    [
+     "20260806",
+     1564
+    ],
+    [
+     "20260807",
+     1456
+    ],
+    [
+     "20260808",
+     1294
+    ],
+    [
+     "20260809",
+     1258
+    ],
+    [
+     "20260810",
+     1138
+    ],
+    [
+     "20260811",
+     1018
+    ],
+    [
+     "20260812",
+     1048
+    ],
+    [
+     "20260813",
+     1062
+    ]
+   ],
+   "wiki_14d": 17771,
+   "wiki_last7": 8274,
+   "wiki_prev7": 9497
+  },
+  {
+   "slug": "lindsey-graham",
+   "name": "Lindsey Graham",
+   "party": "R",
+   "state": "SC",
+   "role": "Incumbent Senator",
+   "race": "South Carolina Senate",
+   "wiki": "Lindsey_Graham",
+   "gdelt": "\"Lindsey Graham\"",
+   "bsky": null,
+   "bioguide": "G000359",
+   "news_error": "HTTP Error 429: Too Many Requests",
+   "news_tone_avg": -1.59,
+   "wiki_daily": [
+    [
+     "20260803",
+     11866
+    ],
+    [
+     "20260804",
+     9584
+    ],
+    [
+     "20260805",
+     8809
+    ],
+    [
+     "20260806",
+     7367
+    ],
+    [
+     "20260807",
+     7615
+    ],
+    [
+     "20260808",
+     7731
+    ],
+    [
+     "20260809",
+     6566
+    ],
+    [
+     "20260810",
+     10872
+    ],
+    [
+     "20260811",
+     12578
+    ],
+    [
+     "20260812",
+     13258
+    ],
+    [
+     "20260813",
+     6322
+    ]
+   ],
+   "wiki_14d": 102568,
+   "wiki_last7": 64942,
+   "wiki_prev7": 37626
+  },
+  {
+   "slug": "roy-cooper",
+   "name": "Roy Cooper",
+   "party": "D",
+   "state": "NC",
+   "role": "Candidate, former Governor",
+   "race": "North Carolina Senate",
+   "wiki": "Roy_Cooper",
+   "gdelt": "\"Roy Cooper\"",
+   "bsky": "roycoopernc.bsky.social",
+   "bioguide": null,
+   "news_error": "HTTP Error 429: Too Many Requests",
+   "tone_error": "HTTP Error 429: Too Many Requests",
+   "wiki_daily": [
+    [
+     "20260803",
+     1221
+    ],
+    [
+     "20260804",
+     1602
+    ],
+    [
+     "20260805",
+     1698
+    ],
+    [
+     "20260806",
+     1620
+    ],
+    [
+     "20260807",
+     1445
+    ],
+    [
+     "20260808",
+     1136
+    ],
+    [
+     "20260809",
+     1133
+    ],
+    [
+     "20260810",
+     1266
+    ],
+    [
+     "20260811",
+     1363
+    ],
+    [
+     "20260812",
+     1327
+    ],
+    [
+     "20260813",
+     1278
+    ]
+   ],
+   "wiki_14d": 15089,
+   "wiki_last7": 8948,
+   "wiki_prev7": 6141,
+   "bsky_followers": 8743,
+   "bsky_avg_likes": 62,
+   "bsky_avg_reposts": 16,
+   "bsky_top_posts": [
+    {
+     "text": "North Carolinians cannot trust a DC insider and Big Oil and Utility Company lobbyist to put their interests first. \n\nI've spent my career in North Carolina working to make our state a better place to live and work, and I will take that mission to the Senate.",
+     "likes": 324,
+     "reposts": 70,
+     "date": "2026-08-10"
+    },
+    {
+     "text": "North Carolinians are struggling to afford groceries and rent while members of Congress and executive branch officials make money trading individual stocks. \n\nLooks bad. Is bad. Should be banned.",
+     "likes": 107,
+     "reposts": 23,
+     "date": "2026-07-06"
+    },
+    {
+     "text": "Right now, there\u2019s a parent having to buy cheaper cereal for their kids. A hardworking employee wondering how to keep paying for health insurance. A young professional staring down a utility bill that\u2019s nearly double what it was last year. \n\nGetting by shouldn\u2019t be this expensive",
+     "likes": 81,
+     "reposts": 21,
+     "date": "2026-07-13"
+    }
+   ]
+  },
+  {
+   "slug": "michael-whatley",
+   "name": "Michael Whatley",
+   "party": "R",
+   "state": "NC",
+   "role": "Candidate, former RNC Chair",
+   "race": "North Carolina Senate",
+   "wiki": "Michael_Whatley",
+   "gdelt": "\"Michael Whatley\"",
+   "bsky": null,
+   "bioguide": null,
+   "news_error": "HTTP Error 429: Too Many Requests",
+   "tone_error": "HTTP Error 429: Too Many Requests",
+   "wiki_daily": [
+    [
+     "20260803",
+     887
+    ],
+    [
+     "20260804",
+     886
+    ],
+    [
+     "20260805",
+     1103
+    ],
+    [
+     "20260806",
+     1141
+    ],
+    [
+     "20260807",
+     1090
+    ],
+    [
+     "20260808",
+     776
+    ],
+    [
+     "20260809",
+     864
+    ],
+    [
+     "20260810",
+     830
+    ],
+    [
+     "20260811",
+     810
+    ],
+    [
+     "20260812",
+     824
+    ],
+    [
+     "20260813",
+     781
+    ]
+   ],
+   "wiki_14d": 9992,
+   "wiki_last7": 5975,
+   "wiki_prev7": 4017
+  },
+  {
+   "slug": "abdul-el-sayed",
+   "name": "Abdul El-Sayed",
+   "party": "D",
+   "state": "MI",
+   "role": "Candidate",
+   "race": "Michigan Senate",
+   "wiki": "Abdul_El-Sayed",
+   "gdelt": "\"Abdul El-Sayed\"",
+   "bsky": "abdulelsayed.bsky.social",
+   "bioguide": null,
+   "news_error": "HTTP Error 429: Too Many Requests",
+   "tone_error": "HTTP Error 429: Too Many Requests",
+   "wiki_daily": [
+    [
+     "20260803",
+     48404
+    ],
+    [
+     "20260804",
+     97072
+    ],
+    [
+     "20260805",
+     634626
+    ],
+    [
+     "20260806",
+     395696
+    ],
+    [
+     "20260807",
+     180784
+    ],
+    [
+     "20260808",
+     138387
+    ],
+    [
+     "20260809",
+     162949
+    ],
+    [
+     "20260810",
+     125920
+    ],
+    [
+     "20260811",
+     91975
+    ],
+    [
+     "20260812",
+     73031
+    ],
+    [
+     "20260813",
+     56188
+    ]
+   ],
+   "wiki_14d": 2005032,
+   "wiki_last7": 829234,
+   "wiki_prev7": 1175798,
+   "bsky_followers": 48226,
+   "bsky_avg_likes": 3522,
+   "bsky_avg_reposts": 850,
+   "bsky_top_posts": [
+    {
+     "text": "I proudly endorse this message from my grandparents \u2764\ufe0f",
+     "likes": 23224,
+     "reposts": 5798,
+     "date": "2026-08-12"
+    },
+    {
+     "text": "We could eliminate $7 billion in medical debt with the $70 million they spent to beat me in the primary. Those same corporations and special interests are trying to buy the seat for Mike Rogers now. \n\nIn November we teach them once and for all: Michigan is not for sale.",
+     "likes": 14037,
+     "reposts": 3902,
+     "date": "2026-08-15"
+    },
+    {
+     "text": "It\u2019s not radical to believe you should be able to afford groceries, see a doctor, breathe clean air, and drink clean water. There\u2019s nothing more American than fighting for a government of, by, and for the people.",
+     "likes": 12592,
+     "reposts": 3415,
+     "date": "2026-08-14"
+    }
+   ]
+  },
+  {
+   "slug": "mike-rogers",
+   "name": "Mike Rogers",
+   "party": "R",
+   "state": "MI",
+   "role": "Candidate, former Congressman",
+   "race": "Michigan Senate",
+   "wiki": "Mike_Rogers_(Michigan_politician)",
+   "gdelt": "\"Mike Rogers\" michigan",
+   "bsky": null,
+   "bioguide": null,
+   "news_articles_28d": 2387,
+   "news_last7": 198,
+   "news_prev7": 1623,
+   "tone_error": "HTTP Error 429: Too Many Requests",
+   "wiki_daily": [
+    [
+     "20260803",
+     5965
+    ],
+    [
+     "20260804",
+     9973
+    ],
+    [
+     "20260805",
+     80703
+    ],
+    [
+     "20260806",
+     39703
+    ],
+    [
+     "20260807",
+     18306
+    ],
+    [
+     "20260808",
+     16366
+    ],
+    [
+     "20260809",
+     14205
+    ],
+    [
+     "20260810",
+     10089
+    ],
+    [
+     "20260811",
+     6743
+    ],
+    [
+     "20260812",
+     5812
+    ],
+    [
+     "20260813",
+     4838
+    ]
+   ],
+   "wiki_14d": 212703,
+   "wiki_last7": 76359,
+   "wiki_prev7": 136344
+  }
+ ]
+}
