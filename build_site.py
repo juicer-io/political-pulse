@@ -18,6 +18,7 @@ MARQUEE = json.load(open(ROOT / "data/data.json"))
 US = json.load(open(ROOT / "data/data_us_full.json")) if (ROOT / "data/data_us_full.json").exists() else {"people": []}
 AU = json.load(open(ROOT / "data/data_au.json")) if (ROOT / "data/data_au.json").exists() else None
 BSKY = json.load(open(ROOT / "data/bsky_us.json")) if (ROOT / "data/bsky_us.json").exists() else {}
+SOCIAL = json.load(open(ROOT / "data/social_us.json")) if (ROOT / "data/social_us.json").exists() else {}
 GEN = "2026-08-17"
 
 INK, INK2, INK3 = "#16283a", "#4d6178", "#8195a8"
@@ -72,6 +73,9 @@ td {{ padding:9px 10px; border-bottom:1px solid #eef2f5; vertical-align:middle; 
 .cta h3 {{ font-size:18px; margin-bottom:6px; }} .cta p {{ color:#c6d2dc; font-size:14px; }}
 .btn {{ display:inline-block; margin-top:14px; background:{CORAL}; color:#fff; font-weight:700; padding:10px 20px; border-radius:8px; }}
 .btn:hover {{ text-decoration:none; opacity:.92; }}
+.btnlink {{ display:inline-block; border:1px solid #dde4ea; border-radius:8px; padding:6px 12px; font-size:13px;
+  background:#fff; color:{INK2}; font-weight:600; }}
+.btnlink:hover {{ text-decoration:none; border-color:{INK3}; }}
 .avatar {{ width:40px; height:40px; border-radius:50%; object-fit:cover; object-position:top; flex:none; background:#e8edf1; }}
 .avatar.lg {{ width:84px; height:84px; }}
 .avatar.init {{ display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; }}
@@ -300,6 +304,18 @@ for p in US["people"]:
         extra_metric = (f'<div class="metric"><div class="k">Bluesky followers</div>'
                         f'<div class="v num">{fmt(p.get("bsky_followers")) or "&mdash;"}</div>'
                         f'<div class="d">{"verified account @" + p["bsky"] if p.get("bsky") else "no verified account found"}</div></div>')
+    soc = SOCIAL.get(p.get("bioguide"), {})
+    links = []
+    if soc.get("twitter"): links.append(f'<a class="btnlink" href="https://x.com/{soc["twitter"]}" rel="nofollow noopener">X @{soc["twitter"]}</a>')
+    if soc.get("instagram"): links.append(f'<a class="btnlink" href="https://www.instagram.com/{soc["instagram"]}/" rel="nofollow noopener">Instagram</a>')
+    if soc.get("facebook"): links.append(f'<a class="btnlink" href="https://www.facebook.com/{soc["facebook"]}" rel="nofollow noopener">Facebook</a>')
+    if soc.get("youtube"): links.append(f'<a class="btnlink" href="https://www.youtube.com/{soc["youtube"]}" rel="nofollow noopener">YouTube</a>')
+    if p.get("bsky"): links.append(f'<a class="btnlink" href="https://bsky.app/profile/{p["bsky"]}" rel="nofollow noopener">Bluesky</a>')
+    socials = ""
+    if links:
+        socials = (f'<div class="card" style="margin-top:16px"><b>Official accounts</b>'
+                   f'<div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap">{"".join(links)}</div>'
+                   f'<p class="na" style="margin-top:10px">One person, {len(links)} platforms. Juicer merges all of them into a single live feed for a website.</p></div>')
     posts = ""
     if p.get("bsky_top_posts"):
         items = "".join(f'<div class="post">{t["text"]}<div class="m">{t["date"]} &middot; {t["likes"]:,} likes &middot; {t["reposts"]:,} reposts</div></div>'
@@ -316,6 +332,7 @@ for p in US["people"]:
 <div class="d">of {len(US["people"])} members by attention</div></div>
 {extra_metric}</div>
 {f'<div class="card"><b>Wikipedia attention, daily</b><br>{spark(p)}</div>' if p.get("wiki_daily") else ''}
+{socials}
 {posts}
 <div style="margin-top:20px">{claim_cta(p["name"])}</div>"""
     (SITE / "p" / f"{p['slug']}.html").write_text(page(f"{p['name']}: attention tracker",
