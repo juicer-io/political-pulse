@@ -108,7 +108,7 @@ def page(title, desc, body, depth=0):
 <style>{CSS}</style></head><body>
 <div class="top"><div class="wrap"><b><a href="{pre}index.html">Political Pulse</a></b>
 <a href="{pre}index.html">Leaderboard</a> <a href="{pre}race-michigan.html">Michigan</a>
-<a href="{pre}race-north-carolina.html">North Carolina</a> <a href="{pre}methodology.html">Methodology</a>
+<a href="{pre}race-north-carolina.html">North Carolina</a> <a href="{pre}australia.html">Australia</a> <a href="{pre}methodology.html">Methodology</a>
 <a class="pj" href="https://www.juicer.io/?utm_source=political-pulse&utm_medium=referral">Powered by Juicer</a></div></div>
 <div class="wrap">{body}</div>
 <div class="wrap"><footer>Political Pulse is an open data project by <a href="https://www.juicer.io/?utm_source=political-pulse">Juicer</a>,
@@ -276,5 +276,57 @@ Expanding to the full 2026 Senate class and beyond is the roadmap; nobody is inc
 platform that senators, parliaments, city governments and campaigns use to show their live social media on their websites.
 The pipeline will be released as open source so journalists and researchers can extend it.</p></div>"""
 (SITE / "methodology.html").write_text(page("Political Pulse methodology", "How Political Pulse measures attention: GDELT, Wikipedia and Bluesky, identically for both parties.", meth))
+
+
+# ---------- Australia board ----------
+AU_PATH = ROOT / "data/data_au.json"
+if AU_PATH.exists():
+    AU = json.load(open(AU_PATH))
+    AUP = AU["people"]
+    AU_COLORS = {"ALP": "#c03434", "LIB": "#2457c5", "NAT": "#8a6d00", "GRN": "#1f7a4d",
+                 "PHON": "#b45309", "LNP": "#2457c5", "CLP": "#2457c5", "IND": "#5a6b78",
+                 "JLN": "#5a6b78", "KAP": "#5a6b78", "CA": "#5a6b78", "OTH": "#5a6b78"}
+    AU_NAMES = {"ALP": "Labor", "LIB": "Liberal", "NAT": "Nationals", "GRN": "Greens",
+                "PHON": "One Nation", "LNP": "Liberal National", "CLP": "Country Liberal",
+                "IND": "Independent", "JLN": "Lambie Network", "KAP": "Katter", "CA": "Centre Alliance", "OTH": "Other"}
+    def au_chip(p_):
+        return f'<span class="pchip" style="background:{AU_COLORS.get(p_["party"], "#5a6b78")}">{p_["party"][:1]}</span>'
+    filled = [x for x in AUP if x.get("wiki_14d") is not None]
+    pending = len(AUP) - len(filled)
+    ranked_au = sorted(AUP, key=lambda x: -(x.get("wiki_14d") or 0))
+    max_au = max((x.get("wiki_14d") or 0) for x in AUP) or 1
+    rows_au = ""
+    for x in ranked_au:
+        w = x.get("wiki_14d")
+        cell = (f'<div class="num" style="margin-bottom:4px">{fmt(w)} {trend(x.get("wiki_last7"), x.get("wiki_prev7"))}</div>'
+                f'<div class="bar"><i style="width:{round(100*(w or 0)/max_au)}%"></i></div>') if w is not None                else '<span class="na">data filling</span>'
+        rows_au += f"""<tr><td><div class="profcard"><span class="who"><b>{au_chip(x)}<a href="p/{x["slug"]}.html">{x["name"]}</a></b>
+<span>{AU_NAMES.get(x["party"], x["party"])} &middot; {x["chamber"]}</span></span></div></td><td>{cell}</td></tr>"""
+    legend_au = " ".join(f'<i style="background:{AU_COLORS[k]}"></i> {AU_NAMES[k]}' for k in ("ALP", "LIB", "NAT", "GRN", "PHON", "IND"))
+    pend_note = f' &middot; attention data still filling for {pending} members' if pending else ''
+    au_body = f"""<div class="hero"><h1>Australia: the full Parliament board</h1>
+<p class="sub">Every current member of the 48th Parliament of Australia, both chambers, ranked by public attention.
+One list, every party, identical methodology. No selections, no exclusions.</p>
+<p class="stamp">Updated {AU["generated_at"]} &middot; {len(AUP)} members tracked{pend_note} &middot; <a href="methodology.html">methodology</a></p></div>
+<div class="legend">Party: {legend_au}</div>
+<div class="card" style="padding:6px 10px"><table>
+<tr><th>Member</th><th>Wikipedia attention (14d)</th></tr>{rows_au}</table></div>
+<div style="margin-top:16px">{claim_cta()}</div>"""
+    (SITE / "australia.html").write_text(page("Australian Parliament attention board",
+        "Every member of the 48th Parliament of Australia ranked by public attention. Open data, by Juicer.", au_body))
+    for x in AUP:
+        w = x.get("wiki_14d")
+        body = f"""<div class="hero"><div class="profcard"><span class="who" style="font-size:20px">
+<b>{au_chip(x)}{x["name"]}</b><span>{AU_NAMES.get(x["party"], x["party"])} &middot; Australian {x["chamber"]}</span></span></div></div>
+<div class="metrics" style="grid-template-columns:1fr 1fr">
+<div class="metric"><div class="k">Wikipedia attention, 14 days</div><div class="v num">{fmt(w) if w is not None else "&mdash;"}</div>
+<div class="d">{trend(x.get("wiki_last7"), x.get("wiki_prev7"))} week over week</div></div>
+<div class="metric"><div class="k">Rank in Parliament</div>
+<div class="v num">#{ranked_au.index(x)+1}</div><div class="d">of {len(AUP)} members by attention</div></div></div>
+{f'<div class="card"><b>Wikipedia attention, daily</b><br>{spark(x, 520, 64)}</div>' if x.get("wiki_daily") else ''}
+<div style="margin-top:20px">{claim_cta(x["name"])}</div>"""
+        (SITE / "p" / f"{x['slug']}.html").write_text(page(f"{x['name']}: attention tracker",
+            f"Public attention profile for {x['name']}, Australian Parliament.", body, depth=1))
+    print("australia board:", len(AUP), "profiles,", pending, "pending")
 
 print("built:", [f.name for f in SITE.glob("*.html")], "+", len(list((SITE/'p').glob('*.html'))), "profiles")

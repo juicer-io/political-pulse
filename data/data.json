@@ -223,7 +223,11 @@
    ],
    "wiki_14d": 17771,
    "wiki_last7": 8274,
-   "wiki_prev7": 9497
+   "wiki_prev7": 9497,
+   "news_tone_avg": -2.17,
+   "news_articles_28d": 2763,
+   "news_last7": 181,
+   "news_prev7": 849
   },
   {
    "slug": "lindsey-graham",
@@ -445,7 +449,8 @@
    "wiki_prev7": 4017,
    "news_articles_28d": 169,
    "news_last7": 32,
-   "news_prev7": 18
+   "news_prev7": 18,
+   "news_tone_avg": -0.38
   },
   {
    "slug": "abdul-el-sayed",
