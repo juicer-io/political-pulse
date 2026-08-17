@@ -18,6 +18,7 @@ MARQUEE = json.load(open(ROOT / "data/data.json"))
 US = json.load(open(ROOT / "data/data_us_full.json")) if (ROOT / "data/data_us_full.json").exists() else {"people": []}
 AU = json.load(open(ROOT / "data/data_au.json")) if (ROOT / "data/data_au.json").exists() else None
 BSKY = json.load(open(ROOT / "data/bsky_us.json")) if (ROOT / "data/bsky_us.json").exists() else {}
+POSTS = json.load(open(ROOT / "data/posts_us.json")) if (ROOT / "data/posts_us.json").exists() else {}
 SOCIAL = json.load(open(ROOT / "data/social_us.json")) if (ROOT / "data/social_us.json").exists() else {}
 XF = json.load(open(ROOT / "data/x_followers.json")) if (ROOT / "data/x_followers.json").exists() else {"followers": {}}
 SOCIAL_AU = json.load(open(ROOT / "data/social_au.json")) if (ROOT / "data/social_au.json").exists() else {}
@@ -92,6 +93,13 @@ td {{ padding:9px 10px; border-bottom:1px solid #eef2f5; vertical-align:middle; 
 .metric .k {{ font-size:12px; color:{INK3}; }} .metric .v {{ font-size:24px; font-weight:700; }}
 .metric .d {{ font-size:12px; color:{INK2}; }}
 .post {{ border:1px solid #e2e8ee; border-radius:10px; padding:12px 14px; margin-bottom:10px; background:#fff; font-size:14px; }}
+.wall {{ display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px; }}
+.wcard {{ flex:0 0 290px; scroll-snap-align:start; background:#fff; border:1px solid #e2e8ee; border-radius:12px;
+  padding:14px 16px; font-size:14px; display:flex; flex-direction:column; }}
+.wcard .plat {{ font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:{INK3}; }}
+.wcard .txt {{ margin:8px 0 10px; flex:1; overflow-wrap:break-word; }}
+.wcard .eng {{ color:{INK3}; font-size:12px; }}
+.pjbadge {{ font-size:11px; font-weight:700; color:{CORAL}; }}
 .post .m {{ color:{INK3}; font-size:12px; margin-top:6px; }}
 footer {{ margin-top:50px; padding:26px 0 40px; color:{INK3}; font-size:13px; border-top:1px solid #e2e8ee; }}
 .faq details {{ background:#fff; border:1px solid #e2e8ee; border-radius:10px; padding:14px 18px; margin-bottom:10px; }}

@@ -1,0 +1,25 @@
+name: Refresh data every 14 days
+on:
+  schedule:
+    - cron: "0 6 1,15 * *"   # 06:00 UTC on the 1st and 15th (~every 14 days)
+  workflow_dispatch: {}
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - name: Refresh and deploy
+        env:
+          JUICER_API_KEY: ${{ secrets.JUICER_API_KEY }}
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
+        run: |
+          mkdir -p ~/juicer && printf 'JUICER_API_KEY=%s\n' "$JUICER_API_KEY" > ~/juicer/.env.api
+          ./refresh.sh
+      - name: Commit refreshed data
+        run: |
+          git config user.name "pulse-bot" && git config user.email "bot@juicer.io"
+          git add data/ && git commit -m "Scheduled data refresh" || echo "no changes"
+          git push
