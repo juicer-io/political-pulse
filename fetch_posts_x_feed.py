@@ -97,16 +97,24 @@ def current_sources():
 
 
 def rotate():
+    # every run cycles ALL members with X handles: wall-less first (by attention),
+    # then existing walls oldest-content first, so every wall refreshes each cycle
+    posts_db0 = json.load(open(POSTS_PATH))
+    def wall_age(p):
+        posts = posts_db0.get(p["slug"]) or []
+        return max((x.get("date") or "") for x in posts) if posts else ""
+    queue = [p for p in people if social.get(p["bioguide"], {}).get("twitter")]
+    queue.sort(key=lambda p: (bool(posts_db0.get(p["slug"])),
+                              wall_age(p), -(p.get("wiki_14d") or 0)))
+    done_slugs = set()
     while True:
-        posts_db = json.load(open(POSTS_PATH))
-        wallless = [p for p in people if not posts_db.get(p["slug"])
-                    and social.get(p["bioguide"], {}).get("twitter")]
-        wallless.sort(key=lambda x: -(x.get("wiki_14d") or 0))
-        if not wallless:
-            print("all members with X handles have walls", flush=True)
+        remaining = [p for p in queue if p["slug"] not in done_slugs]
+        if not remaining:
+            print("full cycle complete: every X-handle member processed", flush=True)
             break
-        batch = [(p, social[p["bioguide"]]["twitter"]) for p in wallless[:BATCH]]
-        print(f"rotating: {len(wallless)} wall-less remain, next batch {len(batch)}", flush=True)
+        batch = [(p, social[p["bioguide"]]["twitter"]) for p in remaining[:BATCH]]
+        done_slugs.update(p["slug"] for p, _ in batch)
+        print(f"rotating: {len(remaining)} to process, next batch {len(batch)}", flush=True)
         for s in current_sources():
             try:
                 req("DELETE", f"/v1/feeds/{FEED}/sources/{s['id']}")
@@ -132,9 +140,8 @@ def rotate():
             time.sleep(40)
             recovered_total += harvest()
             print(f"  pass {i+1}: {recovered_total} new walls this batch", flush=True)
-        if recovered_total == 0:
-            print("batch yielded nothing; stopping to avoid a spin loop", flush=True)
-            break
+        if recovered_total == 0 and not any(True for _ in ()):
+            pass  # batches of existing walls legitimately yield 0 "new" walls; keep cycling
     # cost control: empty the feed so no sources sync between 14-day refreshes
     for s in current_sources():
         try:
