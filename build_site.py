@@ -53,11 +53,11 @@ a {{ color:{DEM}; text-decoration:none; }} a:hover {{ text-decoration:underline;
 .top a {{ color:#fff; opacity:.85; }} .top b a {{ opacity:1; }}
 .top .pj {{ margin-left:auto; background:{CORAL}; color:#fff; padding:3px 12px; border-radius:999px; font-weight:700; font-size:12px; }}
 .hero {{ padding:38px 0 20px; }}
-h1 {{ font-size:32px; letter-spacing:-.5px; line-height:1.15; }}
+h1 {{ font-family:'Montserrat',sans-serif; font-weight:800; font-size:34px; letter-spacing:-1px; line-height:1.12; }}
 .sub {{ color:{INK2}; max-width:760px; margin-top:10px; }}
 .stamp {{ color:{INK3}; font-size:13px; margin-top:8px; }}
 .card {{ background:#fff; border:1px solid #e2e8ee; border-radius:12px; padding:20px 22px; }}
-h2 {{ font-size:20px; margin:30px 0 12px; }}
+h2 {{ font-family:'Montserrat',sans-serif; font-weight:700; font-size:20px; letter-spacing:-.3px; margin:30px 0 12px; }}
 table {{ width:100%; border-collapse:collapse; }}
 th {{ text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:{INK3};
      padding:8px 10px; border-bottom:1px solid #e2e8ee; white-space:nowrap; }}
@@ -93,12 +93,23 @@ td {{ padding:9px 10px; border-bottom:1px solid #eef2f5; vertical-align:middle; 
 .metric .k {{ font-size:12px; color:{INK3}; }} .metric .v {{ font-size:24px; font-weight:700; }}
 .metric .d {{ font-size:12px; color:{INK2}; }}
 .post {{ border:1px solid #e2e8ee; border-radius:10px; padding:12px 14px; margin-bottom:10px; background:#fff; font-size:14px; }}
-.wall {{ display:flex; gap:12px; overflow-x:auto; scroll-snap-type:x mandatory; padding:4px 2px 12px; }}
-.wcard {{ flex:0 0 290px; scroll-snap-align:start; background:#fff; border:1px solid #e2e8ee; border-radius:12px;
-  padding:14px 16px; font-size:14px; display:flex; flex-direction:column; }}
-.wcard .plat {{ font-size:11px; font-weight:700; letter-spacing:.05em; text-transform:uppercase; color:{INK3}; }}
-.wcard .txt {{ margin:8px 0 10px; flex:1; overflow-wrap:break-word; }}
-.wcard .eng {{ color:{INK3}; font-size:12px; }}
+.wall {{ display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; padding:6px 2px 16px; }}
+.wcard {{ flex:0 0 320px; scroll-snap-align:start; background:#fff; border:1px solid #e9eef3; border-radius:16px;
+  font-size:14px; display:flex; flex-direction:column; overflow:hidden;
+  box-shadow:0 1px 3px rgba(16,39,56,.08); transition:transform .15s ease, box-shadow .15s ease; }}
+.wcard:hover {{ transform:translateY(-3px); box-shadow:0 8px 22px rgba(16,39,56,.14); text-decoration:none; }}
+.wcard .ph {{ display:flex; align-items:center; gap:10px; padding:14px 16px 10px; }}
+.wcard .ph img {{ width:38px; height:38px; border-radius:50%; object-fit:cover; object-position:top; }}
+.wcard .ph .pn b {{ display:block; font-size:13.5px; color:{INK}; }}
+.wcard .ph .pn span {{ font-size:12px; color:{INK3}; }}
+.wcard .xmark {{ margin-left:auto; width:22px; height:22px; border-radius:6px; background:#0f1419; color:#fff;
+  font-weight:800; font-size:12px; display:flex; align-items:center; justify-content:center; flex:none; }}
+.wcard .txt {{ padding:0 16px; margin:2px 0 12px; flex:1; overflow-wrap:break-word; color:{INK}; line-height:1.5; }}
+.wcard .eng {{ display:flex; gap:16px; padding:10px 16px 13px; border-top:1px solid #eef2f5;
+  color:{INK3}; font-size:12.5px; font-variant-numeric:tabular-nums; }}
+.wcard .eng span {{ display:flex; align-items:center; gap:5px; }}
+.wcard .eng svg {{ width:14px; height:14px; fill:none; stroke:{INK3}; stroke-width:1.8; }}
+.wcard .wdate {{ margin-left:auto; }}
 .pjbadge {{ font-size:11px; font-weight:700; color:{CORAL}; }}
 .wchip {{ display:inline-block; background:#e8f3ec; color:#1f7a4d; font-size:10px; font-weight:700;
   border-radius:999px; padding:1px 7px; margin-left:6px; vertical-align:middle; }}
@@ -155,7 +166,7 @@ def page(title, desc, body, depth=0, extra_head=""):
     return f"""<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title><meta name="description" content="{desc}">
-<style>{CSS}</style>{extra_head}
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet"><style>{CSS}</style>{extra_head}
 <script>document.addEventListener("click", function(e) {{
   var a = e.target.closest("a");
   if (a && a.host && a.host !== location.host) {{ a.target = "_blank"; a.rel = "noopener"; }}
@@ -345,13 +356,23 @@ for p in US["people"]:
     wall_posts = POSTS.get(p["slug"]) or []
     if wall_posts:
         cards = ""
+        HEART = '<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.8-10-9.3C.6 8.4 2.5 5 6 5c2.2 0 3.6 1.2 6 3.7C14.4 6.2 15.8 5 18 5c3.5 0 5.4 3.4 4 6.7C19.5 16.2 12 21 12 21z"/></svg>'
+        REPLY = '<svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H5l-2 2V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8z"/></svg>'
+        SHARE = '<svg viewBox="0 0 24 24"><path d="M17 2l4 4-4 4M21 6H9a5 5 0 0 0-5 5M7 22l-4-4 4-4M3 18h12a5 5 0 0 0 5-5"/></svg>'
+        member_photo = (f"https://unitedstates.github.io/images/congress/225x275/{p['bioguide']}.jpg"
+                        if p.get("bioguide") else "")
+        member_handle = soc.get("twitter", "")
         for wpost in wall_posts:
-            eng = " &middot; ".join(f"{v:,} {k}" for k, v in
-                                    (("likes", wpost.get("likes")), ("replies", wpost.get("comments")),
-                                     ("shares", wpost.get("shares"))) if v is not None)
-            cards += (f'<a class="wcard" href="{wpost["url"]}"><span class="plat">{wpost["platform"]} &middot; {wpost["date"]}</span>'
+            def _n(v): return f"{v:,}" if v is not None else "0"
+            cards += (f'<a class="wcard" href="{wpost["url"]}">'
+                      f'<span class="ph">{f"<img src=\"{member_photo}\" alt=\"\" onerror=\"this.style.display=chr(39)none{chr(39)}\">" if member_photo else ""}'
+                      f'<span class="pn"><b>{p["name"]}</b><span>@{member_handle}</span></span>'
+                      f'<span class="xmark">&#120143;</span></span>'
                       f'<span class="txt">{(wpost["text"] or "").replace("<", "&lt;")[:240]}</span>'
-                      f'<span class="eng">{eng}</span></a>')
+                      f'<span class="eng"><span>{HEART} {_n(wpost.get("likes"))}</span>'
+                      f'<span>{REPLY} {_n(wpost.get("comments"))}</span>'
+                      f'<span>{SHARE} {_n(wpost.get("shares"))}</span>'
+                      f'<span class="wdate">{wpost["date"]}</span></span></a>')
         badge = '<span class="pjbadge">powered by Juicer</span>'
         src_line = "their official X account, ingested by a live Juicer feed"
         handles_list = []
