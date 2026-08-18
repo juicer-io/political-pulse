@@ -56,7 +56,8 @@ a {{ color:{DEM}; text-decoration:none; }} a:hover {{ text-decoration:underline;
 h1 {{ font-family:'Montserrat',sans-serif; font-weight:800; font-size:34px; letter-spacing:-1px; line-height:1.12; }}
 .sub {{ color:{INK2}; max-width:760px; margin-top:10px; }}
 .stamp {{ color:{INK3}; font-size:13px; margin-top:8px; }}
-.card {{ background:#fff; border:1px solid #e2e8ee; border-radius:12px; padding:20px 22px; }}
+.card {{ background:#fff; border:1px solid #e2e8ee; border-radius:14px; padding:20px 22px;
+  box-shadow:0 1px 2px rgba(16,39,56,.05), 0 10px 24px rgba(16,39,56,.06); }}
 h2 {{ font-family:'Montserrat',sans-serif; font-weight:700; font-size:20px; letter-spacing:-.3px; margin:30px 0 12px; }}
 table {{ width:100%; border-collapse:collapse; }}
 th {{ text-align:left; font-size:11px; text-transform:uppercase; letter-spacing:.05em; color:{INK3};
@@ -89,15 +90,20 @@ td {{ padding:9px 10px; border-bottom:1px solid #eef2f5; vertical-align:middle; 
 .toolbar input {{ flex:1; min-width:180px; }}
 .count {{ color:{INK3}; font-size:13px; align-self:center; }}
 .metrics {{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin:18px 0; }}
-.metric {{ background:#fff; border:1px solid #e2e8ee; border-radius:10px; padding:14px 16px; }}
+.metric {{ background:#fff; border:1px solid #e2e8ee; border-radius:12px; padding:14px 16px;
+  box-shadow:0 1px 2px rgba(16,39,56,.06), 0 8px 20px rgba(16,39,56,.07); }}
 .metric .k {{ font-size:12px; color:{INK3}; }} .metric .v {{ font-size:24px; font-weight:700; }}
 .metric .d {{ font-size:12px; color:{INK2}; }}
 .post {{ border:1px solid #e2e8ee; border-radius:10px; padding:12px 14px; margin-bottom:10px; background:#fff; font-size:14px; }}
 .wall {{ display:flex; gap:16px; overflow-x:auto; scroll-snap-type:x mandatory; padding:6px 2px 16px; }}
-.wcard {{ flex:0 0 320px; scroll-snap-align:start; background:#fff; border:1px solid #e9eef3; border-radius:16px;
-  font-size:14px; display:flex; flex-direction:column; overflow:hidden;
-  box-shadow:0 1px 3px rgba(16,39,56,.08); transition:transform .15s ease, box-shadow .15s ease; }}
-.wcard:hover {{ transform:translateY(-3px); box-shadow:0 8px 22px rgba(16,39,56,.14); text-decoration:none; }}
+.wall {{ perspective:1200px; }}
+.wcard {{ flex:0 0 320px; scroll-snap-align:start; border-radius:18px; font-size:14px;
+  display:flex; flex-direction:column; overflow:hidden; border:1px solid rgba(226,232,238,.9);
+  background:linear-gradient(178deg, #ffffff 0%, #fbfcfe 70%, #f4f7fa 100%);
+  box-shadow:0 1px 2px rgba(16,39,56,.10), 0 6px 14px rgba(16,39,56,.10), 0 18px 34px rgba(16,39,56,.10);
+  transition:transform .22s cubic-bezier(.2,.8,.3,1.1), box-shadow .22s ease; }}
+.wcard:hover {{ transform:translateY(-8px) rotateX(2.5deg) scale(1.025); text-decoration:none;
+  box-shadow:0 2px 4px rgba(16,39,56,.12), 0 14px 28px rgba(16,39,56,.16), 0 34px 64px rgba(16,39,56,.22); }}
 .wcard .ph {{ display:flex; align-items:center; gap:10px; padding:14px 16px 10px; }}
 .wcard .ph img {{ width:38px; height:38px; border-radius:50%; object-fit:cover; object-position:top; }}
 .wcard .ph .pn b {{ display:block; font-size:13.5px; color:{INK}; }}
