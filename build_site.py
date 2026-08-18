@@ -116,7 +116,10 @@ td {{ padding:9px 10px; border-bottom:1px solid #eef2f5; vertical-align:middle; 
 .wcard .eng span {{ display:flex; align-items:center; gap:5px; }}
 .wcard .eng svg {{ width:14px; height:14px; fill:none; stroke:{INK3}; stroke-width:1.8; }}
 .wcard .wdate {{ margin-left:auto; }}
-.pjbadge {{ font-size:11px; font-weight:700; color:{CORAL}; }}
+.pjbadge {{ display:inline-block; font-family:'Montserrat',sans-serif; font-size:15px; font-weight:800;
+  color:#fff; background:{CORAL}; padding:5px 16px; border-radius:999px; margin-left:10px; vertical-align:middle;
+  box-shadow:0 3px 10px rgba(240,91,74,.35); transition:transform .15s ease, box-shadow .15s ease; }}
+.pjbadge:hover {{ transform:translateY(-2px); box-shadow:0 6px 16px rgba(240,91,74,.45); text-decoration:none; color:#fff; }}
 .wchip {{ display:inline-block; background:#e8f3ec; color:#1f7a4d; font-size:10px; font-weight:700;
   border-radius:999px; padding:1px 7px; margin-left:6px; vertical-align:middle; }}
 .post .m {{ color:{INK3}; font-size:12px; margin-top:6px; }}
@@ -379,7 +382,7 @@ for p in US["people"]:
                       f'<span>{REPLY} {_n(wpost.get("comments"))}</span>'
                       f'<span>{SHARE} {_n(wpost.get("shares"))}</span>'
                       f'<span class="wdate">{wpost["date"]}</span></span></a>')
-        badge = '<span class="pjbadge">powered by Juicer</span>'
+        badge = '<a class="pjbadge" href="https://www.juicer.io/api?utm_source=political-pulse&utm_medium=referral&utm_campaign=wall-badge">powered by Juicer</a>'
         src_line = "their official X account, ingested by a live Juicer feed"
         handles_list = []
         if soc.get("twitter"): handles_list.append(("X", "@" + soc["twitter"]))
