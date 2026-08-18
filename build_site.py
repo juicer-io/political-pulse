@@ -352,10 +352,8 @@ for p in US["people"]:
             cards += (f'<a class="wcard" href="{wpost["url"]}"><span class="plat">{wpost["platform"]} &middot; {wpost["date"]}</span>'
                       f'<span class="txt">{(wpost["text"] or "").replace("<", "&lt;")[:240]}</span>'
                       f'<span class="eng">{eng}</span></a>')
-        has_x = any(w["platform"] == "X" for w in wall_posts)
-        badge = ('<span class="pjbadge">powered by the Juicer API</span>' if has_x
-                 else '<span class="pjbadge">via the open Bluesky network</span>')
-        src_line = "their official X and Bluesky accounts" if has_x else "their verified Bluesky account"
+        badge = '<span class="pjbadge">powered by Juicer</span>'
+        src_line = "their official X account, ingested by a live Juicer feed"
         handles_list = []
         if soc.get("twitter"): handles_list.append(("X", "@" + soc["twitter"]))
         if p.get("bsky"): handles_list.append(("Bluesky", p["bsky"]))
@@ -371,15 +369,11 @@ add {p["name"].split()[-1]}'s official accounts as sources and paste one line of
 <a class="btn" href="{signup}">Create your free Juicer account</a></div>"""
         posts = (f'<h2>Latest posts {badge}</h2><div class="wall">{cards}</div>'
                  f'<p class="na">Newest posts from {src_line}. Swipe to browse.</p>' + embed_cta)
-    elif True:
-        posts = ('<div class="card" style="margin-top:16px"><b>Post wall not available yet</b>'
-                 '<p class="na" style="margin-top:6px">This member has no platform-verified Bluesky account, '
-                 'and X post data is coming to open sources soon. Their official accounts are linked above, '
-                 'and follower numbers on the leaderboard stay current.</p></div>')
-    elif p.get("bsky_top_posts"):
-        items = "".join(f'<div class="post">{t["text"]}<div class="m">{t["date"]} &middot; {t["likes"]:,} likes &middot; {t["reposts"]:,} reposts</div></div>'
-                        for t in p["bsky_top_posts"])
-        posts = f'<h2>Most liked recent Bluesky posts</h2>{items}'
+    else:
+        posts = ('<div class="card" style="margin-top:16px"><b>Post wall syncing</b>'
+                 '<p class="na" style="margin-top:6px">This member&#39;s X posts are being ingested and will '
+                 'appear here in a coming refresh. Their official accounts are linked above, and follower '
+                 'numbers on the leaderboard stay current.</p></div>')
     seat = f"{p['chamber']} &middot; {p.get('state')}" + (f"-{p['district']}" if p.get("district") not in (None, 0, "0") else "")
     body = f"""<div class="hero"><div class="who">{avatar(p, lg=True)}
 <span class="nm" style="font-size:20px"><b><span class="pchip" style="background:{PARTY_COLOR[p["party"]]}">{p["party"]}</span>{p["name"]}</b>
