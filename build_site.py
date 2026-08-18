@@ -120,6 +120,18 @@ td {{ padding:9px 10px; border-bottom:1px solid #eef2f5; vertical-align:middle; 
   color:#fff; background:{CORAL}; padding:5px 16px; border-radius:999px; margin-left:10px; vertical-align:middle;
   box-shadow:0 3px 10px rgba(240,91,74,.35); transition:transform .15s ease, box-shadow .15s ease; }}
 .pjbadge:hover {{ transform:translateY(-2px); box-shadow:0 6px 16px rgba(240,91,74,.45); text-decoration:none; color:#fff; }}
+.mini {{ width:225px; background:linear-gradient(178deg,#fff 0%,#f7fafc 100%); border:1px solid #e9eef3;
+  border-radius:12px; padding:10px 12px; cursor:pointer; text-align:left;
+  box-shadow:0 1px 2px rgba(16,39,56,.09), 0 6px 14px rgba(16,39,56,.10);
+  transition:transform .18s ease, box-shadow .18s ease; }}
+.mini:hover {{ transform:translateY(-3px); box-shadow:0 3px 6px rgba(16,39,56,.12), 0 14px 28px rgba(16,39,56,.18); }}
+.mini .mtxt {{ font-size:12px; line-height:1.45; color:{INK}; display:-webkit-box; -webkit-line-clamp:3;
+  -webkit-box-orient:vertical; overflow:hidden; min-height:3.9em; }}
+.mini .mrow {{ display:flex; align-items:center; gap:8px; margin-top:7px; font-size:11px; color:{INK3}; }}
+.mini .mx {{ background:#0f1419; color:#fff; font-weight:800; font-size:9px; border-radius:4px; padding:1px 5px; }}
+.marrow {{ margin-left:auto; width:24px; height:24px; border-radius:50%; border:1px solid #dde4ea; background:#fff;
+  cursor:pointer; font-size:14px; line-height:1; color:{INK2}; flex:none; }}
+.marrow:hover {{ border-color:{CORAL}; color:{CORAL}; }}
 .wchip {{ display:inline-block; background:#e8f3ec; color:#1f7a4d; font-size:10px; font-weight:700;
   border-radius:999px; padding:1px 7px; margin-left:6px; vertical-align:middle; }}
 .post .m {{ color:{INK3}; font-size:12px; margin-top:6px; }}
@@ -210,6 +222,8 @@ board = [{"slug": p["slug"], "n": p["name"], "pa": p["party"], "st": p.get("stat
           "w": p.get("wiki_14d"), "wl": p.get("wiki_last7"), "wp": p.get("wiki_prev7"),
           "bf": p.get("bsky_followers"), "bh": p.get("bsky"),
           "wl2": bool(POSTS.get(p["slug"])),
+          "mp": [{"t": (x.get("text") or "")[:110], "l": x.get("likes"), "d": x.get("date")}
+                 for x in (POSTS.get(p["slug"]) or [])[:3]],
           "tw": SOCIAL.get(p.get("bioguide"), {}).get("twitter"),
           "tf": XF["followers"].get(SOCIAL.get(p.get("bioguide"), {}).get("twitter") or "")} for p in US["people"]]
 states = sorted({p["state"] for p in US["people"] if p.get("state")})
@@ -218,7 +232,7 @@ XH = "X followers &#8597;" if XF["followers"] else "X account"
 
 board_js = f"""
 <script>
-const DATA = {json.dumps(board)};
+const DATA = {json.dumps(board).replace("</", "<\\/")};
 const PC = {{"D": "{DEM}", "R": "{REP}", "I": "{IND}"}};
 const fmtn = n => n == null ? null : (n >= 1e6 ? (n/1e6).toFixed(1)+"M" : n >= 1e4 ? Math.round(n/1e3)+"k" : n.toLocaleString());
 let sortKey = "w";
@@ -243,10 +257,25 @@ function render() {{
       <td>${{p.tw ? (p.tf != null
         ? `<a class="num" href="https://x.com/${{p.tw}}" rel="nofollow noopener">${{fmtn(p.tf)}} &#8599;</a>`
         : `<a href="https://x.com/${{p.tw}}" rel="nofollow noopener">@${{p.tw}}</a>`) : `<span class="na">none listed</span>`}}</td>
-      <td>${{p.bf != null ? `<a class="num" href="https://bsky.app/profile/${{p.bh}}" rel="nofollow noopener">${{fmtn(p.bf)}} &#8599;</a>` : `<span class="na">not verified</span>`}}</td></tr>`;
+      <td>${{p.bf != null ? `<a class="num" href="https://bsky.app/profile/${{p.bh}}" rel="nofollow noopener">${{fmtn(p.bf)}} &#8599;</a>` : `<span class="na">not verified</span>`}}</td>
+      <td>${{p.mp && p.mp.length ? `<div class="mini" data-slug="${{p.slug}}" data-i="0" onclick="location.href='p/${{p.slug}}.html'">
+        <div class="mtxt">${{esc(p.mp[0].t)}}</div>
+        <div class="mrow"><span class="mx">&#120143;</span><span class="ml">&#9825; ${{fmtn(p.mp[0].l) ?? 0}}</span><span class="md">${{p.mp[0].d || ""}}</span>
+        ${{p.mp.length > 1 ? `<button class="marrow" onclick="event.stopPropagation();nextMini(this)">&#8250;</button>` : ""}}</div></div>` : `<span class="na">&mdash;</span>`}}</td></tr>`;
   }}).join("");
 }}
 function setSort(k) {{ sortKey = k; render(); }}
+const esc = s => (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
+function nextMini(btn) {{
+  const card = btn.closest(".mini");
+  const rec = DATA.find(x => x.slug === card.dataset.slug);
+  if (!rec || !rec.mp.length) return;
+  const i = (parseInt(card.dataset.i || "0") + 1) % rec.mp.length;
+  card.dataset.i = i;
+  card.querySelector(".mtxt").textContent = rec.mp[i].t;
+  card.querySelector(".ml").innerHTML = "&#9825; " + (fmtn(rec.mp[i].l) ?? 0);
+  card.querySelector(".md").textContent = rec.mp[i].d || "";
+}}
 window.addEventListener("DOMContentLoaded", render);
 </script>"""
 
@@ -265,7 +294,8 @@ Wikipedia attention, week-over-week movement and verified Bluesky reach. Both pa
 <div class="card tblwrap" style="padding:6px 10px"><table>
 <tr><th>#</th><th>Member</th><th class="sort" onclick="setSort('w')">Wikipedia attention 14d &#8597;</th>
 <th class="sort" onclick="setSort('tf')" title="Follower counts activate once X API access is configured">{XH}</th>
-<th class="sort" onclick="setSort('bf')">Bluesky followers &#8597;</th></tr>
+<th class="sort" onclick="setSort('bf')">Bluesky followers &#8597;</th>
+<th>Latest post <span style="color:{CORAL};text-transform:none">powered by Juicer</span></th></tr>
 <tbody id="tbody"></tbody></table></div>
 <h2>2026 spotlight races</h2>
 <p class="sub" style="margin-bottom:12px">The two open-seat Senate battles of this November's midterms, tracked candidate
@@ -473,6 +503,17 @@ function render() {{
   }}).join("");
 }}
 function setSort(k) {{ sortKey = k; render(); }}
+const esc = s => (s || "").replace(/&/g, "&amp;").replace(/</g, "&lt;");
+function nextMini(btn) {{
+  const card = btn.closest(".mini");
+  const rec = DATA.find(x => x.slug === card.dataset.slug);
+  if (!rec || !rec.mp.length) return;
+  const i = (parseInt(card.dataset.i || "0") + 1) % rec.mp.length;
+  card.dataset.i = i;
+  card.querySelector(".mtxt").textContent = rec.mp[i].t;
+  card.querySelector(".ml").innerHTML = "&#9825; " + (fmtn(rec.mp[i].l) ?? 0);
+  card.querySelector(".md").textContent = rec.mp[i].d || "";
+}}
 window.addEventListener("DOMContentLoaded", render);
 </script>"""
     legend_au = " ".join(f'<i style="background:{AU_COLORS[k]}"></i> {AU_NAMES[k]}' for k in ("ALP", "LIB", "NAT", "GRN", "PHON", "IND"))
@@ -489,7 +530,8 @@ One list, every party, identical methodology. No selections, no exclusions.</p>
 <div class="legend">Party: {legend_au}</div>
 <div class="card tblwrap" style="padding:6px 10px"><table>
 <tr><th>#</th><th>Member</th><th class="sort" onclick="setSort('w')">Wikipedia attention 14d &#8597;</th>
-<th class="sort" onclick="setSort('tf')">X followers &#8597;</th><th class="sort" onclick="setSort('bf')">Bluesky followers &#8597;</th></tr>
+<th class="sort" onclick="setSort('tf')">X followers &#8597;</th><th class="sort" onclick="setSort('bf')">Bluesky followers &#8597;</th>
+<th>Latest post <span style="color:{CORAL};text-transform:none">powered by Juicer</span></th></tr>
 <tbody id="tbody"></tbody></table></div>
 <div style="margin-top:16px">{claim_cta()}</div>"""
     (SITE / "australia.html").write_text(page("Australian Parliament attention board",
