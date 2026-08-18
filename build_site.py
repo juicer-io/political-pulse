@@ -100,6 +100,8 @@ td {{ padding:9px 10px; border-bottom:1px solid #eef2f5; vertical-align:middle; 
 .wcard .txt {{ margin:8px 0 10px; flex:1; overflow-wrap:break-word; }}
 .wcard .eng {{ color:{INK3}; font-size:12px; }}
 .pjbadge {{ font-size:11px; font-weight:700; color:{CORAL}; }}
+.wchip {{ display:inline-block; background:#e8f3ec; color:#1f7a4d; font-size:10px; font-weight:700;
+  border-radius:999px; padding:1px 7px; margin-left:6px; vertical-align:middle; }}
 .post .m {{ color:{INK3}; font-size:12px; margin-top:6px; }}
 footer {{ margin-top:50px; padding:26px 0 40px; color:{INK3}; font-size:13px; border-top:1px solid #e2e8ee; }}
 .faq details {{ background:#fff; border:1px solid #e2e8ee; border-radius:10px; padding:14px 18px; margin-bottom:10px; }}
@@ -187,6 +189,7 @@ board = [{"slug": p["slug"], "n": p["name"], "pa": p["party"], "st": p.get("stat
           "ch": p["chamber"], "bg": p.get("bioguide"),
           "w": p.get("wiki_14d"), "wl": p.get("wiki_last7"), "wp": p.get("wiki_prev7"),
           "bf": p.get("bsky_followers"), "bh": p.get("bsky"),
+          "wl2": bool(POSTS.get(p["slug"])),
           "tw": SOCIAL.get(p.get("bioguide"), {}).get("twitter"),
           "tf": XF["followers"].get(SOCIAL.get(p.get("bioguide"), {}).get("twitter") or "")} for p in US["people"]]
 states = sorted({p["state"] for p in US["people"] if p.get("state")})
@@ -215,7 +218,7 @@ function render() {{
       <div class="bar"><i style="width:${{Math.round(100 * (p.w || 0) / mx)}}%"></i></div>` : `<span class="na">data filling</span>`;
     return `<tr><td><span class="na num">${{i + 1}}</span></td>
       <td><div class="who">${{img}}<span class="pchip" style="background:${{PC[p.pa]}}">${{p.pa}}</span>
-      <span class="nm"><b><a href="p/${{p.slug}}.html">${{p.n}}</a></b><span>${{p.ch}} &middot; ${{p.st}}</span></span></div></td>
+      <span class="nm"><b><a href="p/${{p.slug}}.html">${{p.n}}</a>${{p.wl2 ? ' <span class="wchip">posts</span>' : ''}}</b><span>${{p.ch}} &middot; ${{p.st}}</span></span></div></td>
       <td>${{att}}</td>
       <td>${{p.tw ? (p.tf != null
         ? `<a class="num" href="https://x.com/${{p.tw}}" rel="nofollow noopener">${{fmtn(p.tf)}} &#8599;</a>`
@@ -368,6 +371,11 @@ add {p["name"].split()[-1]}'s official accounts as sources and paste one line of
 <a class="btn" href="{signup}">Create your free Juicer account</a></div>"""
         posts = (f'<h2>Latest posts {badge}</h2><div class="wall">{cards}</div>'
                  f'<p class="na">Newest posts from {src_line}. Swipe to browse.</p>' + embed_cta)
+    elif True:
+        posts = ('<div class="card" style="margin-top:16px"><b>Post wall not available yet</b>'
+                 '<p class="na" style="margin-top:6px">This member has no platform-verified Bluesky account, '
+                 'and X post data is coming to open sources soon. Their official accounts are linked above, '
+                 'and follower numbers on the leaderboard stay current.</p></div>')
     elif p.get("bsky_top_posts"):
         items = "".join(f'<div class="post">{t["text"]}<div class="m">{t["date"]} &middot; {t["likes"]:,} likes &middot; {t["reposts"]:,} reposts</div></div>'
                         for t in p["bsky_top_posts"])
