@@ -128,6 +128,14 @@ def rotate():
         if recovered_total == 0:
             print("batch yielded nothing; stopping to avoid a spin loop", flush=True)
             break
+    # cost control: empty the feed so no sources sync between 14-day refreshes
+    for s in current_sources():
+        try:
+            req("DELETE", f"/v1/feeds/{FEED}/sources/{s['id']}")
+        except Exception:
+            pass
+        time.sleep(0.4)
+    print("feed emptied: zero sources syncing until next refresh", flush=True)
 
 
 if __name__ == "__main__":
