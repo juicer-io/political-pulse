@@ -6,7 +6,8 @@ cd "$(dirname "$0")"
 PY="${PYTHON:-python3}"
 $PY filler_us.py || true          # wikipedia attention, US then AU (rate-limit tolerant)
 $PY fetch_x_followers.py          # X followers via Juicer API
-$PY fetch_posts_us.py             # senate walls (add --house when extended)
+$PY fetch_posts_us.py             # bluesky walls
+$PY fetch_posts_x_feed.py         # X walls via feed 457678 (D-1236 workaround)
 $PY build_site.py
 if [ -n "${NETLIFY_SITE_ID:-}" ]; then
   npx --yes netlify-cli deploy --prod --dir site --site "$NETLIFY_SITE_ID"
