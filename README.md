@@ -9,7 +9,7 @@ Wikipedia attention (Pageviews API) and verified Bluesky presence. No API keys n
 ## Quickstart (3 steps, Python 3.10+, no dependencies)
 
 ```bash
-git clone <this repo> && cd political-pulse
+git clone https://github.com/juicer-io/political-pulse && cd political-pulse
 
 # 1. Edit people.json: one entry per politician you want to track
 #    (name, party, state, wiki article title, GDELT query, optional verified Bluesky handle)
