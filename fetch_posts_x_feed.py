@@ -26,12 +26,19 @@ KEY = next(l.split("=", 1)[1].strip().strip('"') for l in open(Path.home() / "ju
            if l.startswith("JUICER_API_KEY="))
 
 
-def req(method, path, body=None):
-    r = urllib.request.Request("https://api.juicer.io" + path, method=method,
-                               headers={"Authorization": f"Bearer {KEY}",
-                                        "Content-Type": "application/json"},
-                               data=json.dumps(body).encode() if body else None)
-    return json.load(urllib.request.urlopen(r, timeout=60))
+def req(method, path, body=None, retries=3):
+    last = None
+    for attempt in range(retries):
+        try:
+            r = urllib.request.Request("https://api.juicer.io" + path, method=method,
+                                       headers={"Authorization": f"Bearer {KEY}",
+                                                "Content-Type": "application/json"},
+                                       data=json.dumps(body).encode() if body else None)
+            return json.load(urllib.request.urlopen(r, timeout=60))
+        except Exception as e:
+            last = e
+            time.sleep(5 * (attempt + 1))
+    raise last
 
 
 people = json.load(open(ROOT / "people_us_full.json"))
