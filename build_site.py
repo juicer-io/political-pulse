@@ -125,8 +125,12 @@ td {{ padding:9px 10px; border-bottom:1px solid #eef2f5; vertical-align:middle; 
   box-shadow:0 1px 2px rgba(16,39,56,.09), 0 6px 14px rgba(16,39,56,.10);
   transition:transform .18s ease, box-shadow .18s ease; }}
 .mini:hover {{ transform:translateY(-3px); box-shadow:0 3px 6px rgba(16,39,56,.12), 0 14px 28px rgba(16,39,56,.18); }}
+.mini .mhead {{ display:flex; gap:9px; align-items:flex-start; }}
+.mini .mavatar {{ width:28px; height:28px; border-radius:50%; object-fit:cover; object-position:top; flex:none;
+  border:1.5px solid #fff; box-shadow:0 1px 4px rgba(16,39,56,.25); }}
 .mini .mtxt {{ font-size:12px; line-height:1.45; color:{INK}; display:-webkit-box; -webkit-line-clamp:3;
-  -webkit-box-orient:vertical; overflow:hidden; min-height:3.9em; }}
+  -webkit-box-orient:vertical; overflow:hidden; min-height:3.9em; flex:1; }}
+.mini.msync .mtxt {{ color:{INK3}; font-style:italic; min-height:auto; }}
 .mini .mrow {{ display:flex; align-items:center; gap:8px; margin-top:7px; font-size:11px; color:{INK3}; }}
 .mini .mx {{ background:#0f1419; color:#fff; font-weight:800; font-size:9px; border-radius:4px; padding:1px 5px; }}
 .marrow {{ margin-left:auto; width:24px; height:24px; border-radius:50%; border:1px solid #dde4ea; background:#fff;
@@ -258,10 +262,15 @@ function render() {{
         ? `<a class="num" href="https://x.com/${{p.tw}}" rel="nofollow noopener">${{fmtn(p.tf)}} &#8599;</a>`
         : `<a href="https://x.com/${{p.tw}}" rel="nofollow noopener">@${{p.tw}}</a>`) : `<span class="na">none listed</span>`}}</td>
       <td>${{p.bf != null ? `<a class="num" href="https://bsky.app/profile/${{p.bh}}" rel="nofollow noopener">${{fmtn(p.bf)}} &#8599;</a>` : `<span class="na">not verified</span>`}}</td>
-      <td>${{p.mp && p.mp.length ? `<div class="mini" data-slug="${{p.slug}}" data-i="0" onclick="location.href='p/${{p.slug}}.html'">
-        <div class="mtxt">${{esc(p.mp[0].t)}}</div>
-        <div class="mrow"><span class="mx">&#120143;</span><span class="ml">&#9825; ${{fmtn(p.mp[0].l) ?? 0}}</span><span class="md">${{p.mp[0].d || ""}}</span>
-        ${{p.mp.length > 1 ? `<button class="marrow" onclick="event.stopPropagation();nextMini(this)">&#8250;</button>` : ""}}</div></div>` : `<span class="na">&mdash;</span>`}}</td></tr>`;
+      <td>${{(() => {{
+        const av = p.bg ? `<img class="mavatar" loading="lazy" src="https://unitedstates.github.io/images/congress/225x275/${{p.bg}}.jpg" onerror="this.style.display='none'" alt="">` : "";
+        if (p.mp && p.mp.length) return `<div class="mini" data-slug="${{p.slug}}" data-i="0" onclick="location.href='p/${{p.slug}}.html'">
+          <div class="mhead">${{av}}<div class="mtxt">${{esc(p.mp[0].t)}}</div></div>
+          <div class="mrow"><span class="mx">&#120143;</span><span class="ml">&#9825; ${{fmtn(p.mp[0].l) ?? 0}}</span><span class="md">${{p.mp[0].d || ""}}</span>
+          ${{p.mp.length > 1 ? `<button class="marrow" onclick="event.stopPropagation();nextMini(this)">&#8250;</button>` : ""}}</div></div>`;
+        return `<div class="mini msync" onclick="location.href='p/${{p.slug}}.html'">
+          <div class="mhead">${{av}}<div class="mtxt">posts syncing, coming in the next refresh</div></div></div>`;
+      }})()}}</td></tr>`;
   }}).join("");
 }}
 function setSort(k) {{ sortKey = k; render(); }}
