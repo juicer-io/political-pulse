@@ -268,8 +268,9 @@ function render() {{
           <div class="mhead">${{av}}<div class="mtxt">${{esc(p.mp[0].t)}}</div></div>
           <div class="mrow"><span class="mx">&#120143;</span><span class="ml">&#9825; ${{fmtn(p.mp[0].l) ?? 0}}</span><span class="md">${{p.mp[0].d || ""}}</span>
           ${{p.mp.length > 1 ? `<button class="marrow" onclick="event.stopPropagation();nextMini(this)">&#8250;</button>` : ""}}</div></div>`;
+        const msg = p.tw ? "posts syncing, coming in the next refresh" : "no official X account listed";
         return `<div class="mini msync" onclick="location.href='p/${{p.slug}}.html'">
-          <div class="mhead">${{av}}<div class="mtxt">posts syncing, coming in the next refresh</div></div></div>`;
+          <div class="mhead">${{av}}<div class="mtxt">${{msg}}</div></div></div>`;
       }})()}}</td></tr>`;
   }}).join("");
 }}
