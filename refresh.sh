@@ -6,7 +6,8 @@ cd "$(dirname "$0")"
 PY="${PYTHON:-python3}"
 $PY filler_us.py || true          # wikipedia attention, US then AU (rate-limit tolerant)
 $PY fetch_x_followers.py          # X followers via Juicer API
-$PY fetch_posts_x_feed.py --rotate  # X-only walls via Juicer feed 457678 (rotating batches)
+$PY fetch_posts_x_feed.py --rotate  # US X walls via Juicer feed (rotating batches)
+$PY fetch_posts_x_feed_au.py --rotate  # AU X walls, same pattern
 $PY build_site.py
 if [ -n "${NETLIFY_SITE_ID:-}" ]; then
   npx --yes netlify-cli deploy --prod --dir site --site "$NETLIFY_SITE_ID"
