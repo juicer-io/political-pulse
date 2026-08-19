@@ -1,0 +1,49 @@
+rotating: 505 to process, next batch 55
+add fail SenJohnThune: HTTP Error 422: Unprocessable Entity
+add fail PeterWelch: HTTP Error 422: Unprocessable Entity
+add fail RepKClark: HTTP Error 422: Unprocessable Entity
+add fail RepRubenGallego: HTTP Error 422: Unprocessable Entity
+add fail RepTomEmmer: HTTP Error 422: Unprocessable Entity
+add fail RepJimBanks: HTTP Error 422: Unprocessable Entity
+add fail RepMikeJohnson: HTTP Error 422: Unprocessable Entity
+add fail RepTedBudd: HTTP Error 422: Unprocessable Entity
+add fail RepJohnCurtis: HTTP Error 422: Unprocessable Entity
+add fail RepCloudTX: HTTP Error 422: Unprocessable Entity
+add fail RepSlotkin: HTTP Error 422: Unprocessable Entity
+batch added: 44
+  pass 1: 41 new walls this batch
+  pass 2: 41 new walls this batch
+  pass 3: 41 new walls this batch
+  pass 4: 41 new walls this batch
+  pass 5: 41 new walls this batch
+  pass 6: 41 new walls this batch
+rotating: 450 to process, next batch 55
+add fail RepMalliotakis: HTTP Error 422: Unprocessable Entity
+add fail JMoylanforGuam: HTTP Error 422: Unprocessable Entity
+batch added: 53
+  pass 1: 53 new walls this batch
+  pass 2: 53 new walls this batch
+  pass 3: 53 new walls this batch
+  pass 4: 53 new walls this batch
+  pass 5: 53 new walls this batch
+  pass 6: 53 new walls this batch
+rotating: 395 to process, next batch 55
+add fail RepEdwards: HTTP Error 422: Unprocessable Entity
+add fail RepWesleyHunt: HTTP Error 422: Unprocessable Entity
+batch added: 53
+  pass 1: 53 new walls this batch
+  pass 2: 53 new walls this batch
+  pass 3: 53 new walls this batch
+  pass 4: 53 new walls this batch
+  pass 5: 53 new walls this batch
+  pass 6: 53 new walls this batch
+rotating: 340 to process, next batch 55
+batch added: 55
+  pass 1: 53 new walls this batch
+  pass 2: 53 new walls this batch
+  pass 3: 53 new walls this batch
+  pass 4: 53 new walls this batch
+  pass 5: 53 new walls this batch
+  pass 6: 53 new walls this batch
+rotating: 285 to process, next batch 55
+batch added: 55
