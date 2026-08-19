@@ -164,60 +164,6 @@
    "wiki_prev7": 209
   },
   {
-   "slug": "au-wendy-askew",
-   "name": "Wendy Askew",
-   "party": "LIB",
-   "chamber": "Senate",
-   "wiki": "Wendy_Askew",
-   "bsky": null,
-   "bioguide": null,
-   "wiki_daily": [
-    [
-     "20260804",
-     24
-    ],
-    [
-     "20260805",
-     20
-    ],
-    [
-     "20260806",
-     10
-    ],
-    [
-     "20260807",
-     15
-    ],
-    [
-     "20260808",
-     33
-    ],
-    [
-     "20260809",
-     24
-    ],
-    [
-     "20260810",
-     94
-    ],
-    [
-     "20260811",
-     73
-    ],
-    [
-     "20260812",
-     50
-    ],
-    [
-     "20260813",
-     41
-    ]
-   ],
-   "wiki_14d": 384,
-   "wiki_last7": 330,
-   "wiki_prev7": 54
-  },
-  {
    "slug": "au-tim-ayres",
    "name": "Tim Ayres",
    "party": "ALP",
@@ -3565,64 +3511,6 @@
    "wiki_prev7": 24
   },
   {
-   "slug": "au-warwick-stacey",
-   "name": "Warwick Stacey",
-   "party": "PHON",
-   "chamber": "Senate",
-   "wiki": "Warwick_Stacey",
-   "bsky": null,
-   "bioguide": null,
-   "wiki_14d": 95,
-   "wiki_daily": [
-    [
-     "20260803",
-     7
-    ],
-    [
-     "20260804",
-     10
-    ],
-    [
-     "20260805",
-     9
-    ],
-    [
-     "20260806",
-     7
-    ],
-    [
-     "20260807",
-     11
-    ],
-    [
-     "20260808",
-     9
-    ],
-    [
-     "20260809",
-     4
-    ],
-    [
-     "20260810",
-     6
-    ],
-    [
-     "20260811",
-     10
-    ],
-    [
-     "20260812",
-     9
-    ],
-    [
-     "20260813",
-     13
-    ]
-   ],
-   "wiki_last7": 62,
-   "wiki_prev7": 33
-  },
-  {
    "slug": "au-jordon-steele-john",
    "name": "Jordon Steele-John",
    "party": "GRN",
@@ -4499,64 +4387,6 @@
    ],
    "wiki_last7": 150,
    "wiki_prev7": 46
-  },
-  {
-   "slug": "au-leader-of-the-house",
-   "name": "Leader of the House",
-   "party": "ALP",
-   "chamber": "House",
-   "wiki": "Leader_of_the_House_(Australia)",
-   "bsky": null,
-   "bioguide": null,
-   "wiki_14d": 123,
-   "wiki_daily": [
-    [
-     "20260803",
-     5
-    ],
-    [
-     "20260804",
-     10
-    ],
-    [
-     "20260805",
-     17
-    ],
-    [
-     "20260806",
-     15
-    ],
-    [
-     "20260807",
-     14
-    ],
-    [
-     "20260808",
-     14
-    ],
-    [
-     "20260809",
-     16
-    ],
-    [
-     "20260810",
-     8
-    ],
-    [
-     "20260811",
-     11
-    ],
-    [
-     "20260812",
-     7
-    ],
-    [
-     "20260813",
-     6
-    ]
-   ],
-   "wiki_last7": 76,
-   "wiki_prev7": 47
   },
   {
    "slug": "au-joanne-ryan",
@@ -9351,64 +9181,6 @@
    "wiki_prev7": 273
   },
   {
-   "slug": "au-sussan-ley",
-   "name": "Sussan Ley",
-   "party": "LIB",
-   "chamber": "House",
-   "wiki": "Sussan_Ley",
-   "bsky": null,
-   "bioguide": null,
-   "wiki_14d": 11496,
-   "wiki_daily": [
-    [
-     "20260803",
-     156
-    ],
-    [
-     "20260804",
-     151
-    ],
-    [
-     "20260805",
-     143
-    ],
-    [
-     "20260806",
-     153
-    ],
-    [
-     "20260807",
-     330
-    ],
-    [
-     "20260808",
-     738
-    ],
-    [
-     "20260809",
-     492
-    ],
-    [
-     "20260810",
-     369
-    ],
-    [
-     "20260811",
-     7108
-    ],
-    [
-     "20260812",
-     1368
-    ],
-    [
-     "20260813",
-     488
-    ]
-   ],
-   "wiki_last7": 10893,
-   "wiki_prev7": 603
-  },
-  {
    "slug": "au-sam-lim",
    "name": "Sam Lim",
    "party": "ALP",
@@ -13303,6 +13075,76 @@
    ],
    "wiki_last7": 72,
    "wiki_prev7": 34
+  },
+  {
+   "slug": "au-dave-sharma",
+   "name": "Dave Sharma",
+   "party": "LIB",
+   "chamber": "Senate",
+   "wiki": "Dave Sharma",
+   "bioguide": null,
+   "bsky": null,
+   "wiki_daily": [
+    [
+     "20260805",
+     155
+    ],
+    [
+     "20260806",
+     79
+    ],
+    [
+     "20260807",
+     64
+    ],
+    [
+     "20260808",
+     60
+    ],
+    [
+     "20260809",
+     44
+    ],
+    [
+     "20260810",
+     56
+    ],
+    [
+     "20260811",
+     94
+    ],
+    [
+     "20260812",
+     75
+    ],
+    [
+     "20260813",
+     134
+    ],
+    [
+     "20260814",
+     444
+    ],
+    [
+     "20260815",
+     101
+    ],
+    [
+     "20260816",
+     94
+    ],
+    [
+     "20260817",
+     79
+    ],
+    [
+     "20260818",
+     81
+    ]
+   ],
+   "wiki_14d": 1560,
+   "wiki_last7": 1008,
+   "wiki_prev7": 552
   }
  ]
 }
