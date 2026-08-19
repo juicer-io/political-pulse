@@ -1,0 +1,40 @@
+AU feed: 457756
+AU rotating: 98 to process, batch 50
+add fail rajah_mich: HTTP Error 422: Unprocessable Entity
+add fail dorinda_cox: HTTP Error 422: Unprocessable Entity
+add fail SHendersonMP: HTTP Error 422: Unprocessable Entity
+add fail KovacicMaria: HTTP Error 422: Unprocessable Entity
+add fail JacquiLambie: HTTP Error 422: Unprocessable Entity
+add fail linessue: HTTP Error 422: Unprocessable Entity
+add fail Malarndirri19: HTTP Error 422: Unprocessable Entity
+add fail pocockdavid: HTTP Error 422: Unprocessable Entity
+add fail ShoebridgeMLC: HTTP Error 422: Unprocessable Entity
+add fail MsMarielleSmith: HTTP Error 422: Unprocessable Entity
+add fail GlennSterle: HTTP Error 422: Unprocessable Entity
+add fail lidia__thorpe: HTTP Error 422: Unprocessable Entity
+add fail SenatorSurfer: HTTP Error 422: Unprocessable Entity
+AU batch added: 37
+  AU pass 1: +35
+  AU pass 2: +0
+  AU pass 3: +0
+  AU pass 4: +0
+  AU pass 5: +0
+  AU pass 6: +0
+AU rotating: 48 to process, batch 48
+add fail JasonClareMP: HTTP Error 503: Service Unavailable
+add fail SharonClaydon: HTTP Error 422: Unprocessable Entity
+add fail LibbyCokerLabor: HTTP Error 422: Unprocessable Entity
+add fail markdreyfusQCMP: HTTP Error 422: Unprocessable Entity
+add fail lukejgosling: HTTP Error 422: Unprocessable Entity
+add fail DanielMulinoMP: HTTP Error 422: Unprocessable Entity
+add fail LlewOBrienMP: HTTP Error 422: Unprocessable Entity
+add fail MakeMayoMatter: HTTP Error 422: Unprocessable Entity
+AU batch added: 40
+  AU pass 1: +36
+  AU pass 2: +0
+  AU pass 3: +0
+  AU pass 4: +0
+  AU pass 5: +0
+  AU pass 6: +0
+AU cycle complete
+AU feed emptied
