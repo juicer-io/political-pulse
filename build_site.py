@@ -23,6 +23,7 @@ SOCIAL = json.load(open(ROOT / "data/social_us.json")) if (ROOT / "data/social_u
 XF = json.load(open(ROOT / "data/x_followers.json")) if (ROOT / "data/x_followers.json").exists() else {"followers": {}}
 SOCIAL_AU = json.load(open(ROOT / "data/social_au.json")) if (ROOT / "data/social_au.json").exists() else {}
 BSKY_AU = json.load(open(ROOT / "data/bsky_au.json")) if (ROOT / "data/bsky_au.json").exists() else {}
+POSTS_AU = json.load(open(ROOT / "data/posts_au.json")) if (ROOT / "data/posts_au.json").exists() else {}
 GEN = "2026-08-17"
 
 INK, INK2, INK3 = "#16283a", "#4d6178", "#8195a8"
@@ -481,7 +482,9 @@ if AU:
                          "w": x.get("wiki_14d"), "wl": x.get("wiki_last7"), "wp": x.get("wiki_prev7"),
                          "tw": tw, "tf": XF["followers"].get(tw) if tw else None,
                          "bh": ba["handle"] if ba else None,
-                         "bf": ba.get("followers") if ba else None})
+                         "bf": ba.get("followers") if ba else None,
+                         "mp": [{"t": (w.get("text") or "")[:110], "l": w.get("likes"), "d": w.get("date")}
+                                for w in (POSTS_AU.get(x["slug"]) or [])[:3]]})
     au_parties = sorted({x["party"] for x in AUP})
     au_js = f"""
 <script>
@@ -506,10 +509,21 @@ function render() {{
       ? `<a class="num" href="https://x.com/${{p.tw}}">${{fmtn(p.tf)}} &#8599;</a>`
       : `<a href="https://x.com/${{p.tw}}">@${{p.tw}}</a>`) : `<span class="na">none listed</span>`;
     const bs = p.bf != null ? `<a class="num" href="https://bsky.app/profile/${{p.bh}}">${{fmtn(p.bf)}} &#8599;</a>` : `<span class="na">none listed</span>`;
+    const mav = `<div class="mavatar" style="background:${{PC[p.pa] || "#5a6b78"}};color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:11px">${{p.n.split(" ").map(w=>w[0]).slice(0,2).join("")}}</div>`;
+    let mini;
+    if (p.mp && p.mp.length) {{
+      mini = `<div class="mini" data-slug="${{p.slug}}" data-i="0" onclick="location.href='p/${{p.slug}}.html'">
+        <div class="mhead">${{mav}}<div class="mtxt">${{esc(p.mp[0].t)}}</div></div>
+        <div class="mrow"><span class="mx">&#120143;</span><span class="ml">&#9825; ${{fmtn(p.mp[0].l) ?? 0}}</span><span class="md">${{p.mp[0].d || ""}}</span>
+        ${{p.mp.length > 1 ? `<button class="marrow" onclick="event.stopPropagation();nextMini(this)">&#8250;</button>` : ""}}</div></div>`;
+    }} else {{
+      const msg = p.tw ? "posts syncing, coming soon" : "no official X account listed";
+      mini = `<div class="mini msync" onclick="location.href='p/${{p.slug}}.html'"><div class="mhead">${{mav}}<div class="mtxt">${{msg}}</div></div></div>`;
+    }}
     return `<tr><td><span class="na num">${{i + 1}}</span></td>
       <td><div class="who"><span class="pchip" style="background:${{PC[p.pa] || "#5a6b78"}}">${{p.pa[0]}}</span>
       <span class="nm"><b><a href="p/${{p.slug}}.html">${{p.n}}</a></b><span>${{PN[p.pa] || p.pa}} &middot; ${{p.ch}}</span></span></div></td>
-      <td>${{att}}</td><td>${{x}}</td><td>${{bs}}</td></tr>`;
+      <td>${{att}}</td><td>${{x}}</td><td>${{bs}}</td><td>${{mini}}</td></tr>`;
   }}).join("");
 }}
 function setSort(k) {{ sortKey = k; render(); }}
@@ -547,6 +561,33 @@ One list, every party, identical methodology. No selections, no exclusions.</p>
     (SITE / "australia.html").write_text(page("Australian Parliament attention board",
         "Every member of the 48th Parliament of Australia ranked by public attention. Open data, by Juicer.", au_body,
         extra_head=au_js))
+    def au_wall(x, color):
+        wall_posts = POSTS_AU.get(x["slug"]) or []
+        tw_h = SOCIAL_AU.get(x["slug"], {}).get("twitter", "")
+        init = "".join(n[0] for n in x["name"].split()[:2])
+        if not wall_posts:
+            msg = ("posts syncing, coming in a refresh" if tw_h else "no official X account listed on Wikidata")
+            return (f'<div class="card" style="margin-top:16px"><b>Post wall</b>'
+                    f'<p class="na" style="margin-top:6px">{msg}</p></div>')
+        HEART = '<svg viewBox="0 0 24 24"><path d="M12 21s-7.5-4.8-10-9.3C.6 8.4 2.5 5 6 5c2.2 0 3.6 1.2 6 3.7C14.4 6.2 15.8 5 18 5c3.5 0 5.4 3.4 4 6.7C19.5 16.2 12 21 12 21z"/></svg>'
+        REPLY = '<svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-8 8H5l-2 2V12a8 8 0 0 1 8-8h2a8 8 0 0 1 8 8z"/></svg>'
+        SHARE = '<svg viewBox="0 0 24 24"><path d="M17 2l4 4-4 4M21 6H9a5 5 0 0 0-5 5M7 22l-4-4 4-4M3 18h12a5 5 0 0 0 5-5"/></svg>'
+        cards = ""
+        for wpost in wall_posts:
+            def _n(v): return f"{v:,}" if v is not None else "0"
+            cards += (f'<a class="wcard" href="{wpost["url"]}">'
+                      f'<span class="ph"><span class="avatar init" style="width:38px;height:38px;background:{color};font-size:14px">{init}</span>'
+                      f'<span class="pn"><b>{x["name"]}</b><span>@{tw_h}</span></span>'
+                      f'<span class="xmark">&#120143;</span></span>'
+                      f'<span class="txt">{(wpost["text"] or "").replace("<", "&lt;")[:240]}</span>'
+                      f'<span class="eng"><span>{HEART} {_n(wpost.get("likes"))}</span>'
+                      f'<span>{REPLY} {_n(wpost.get("comments"))}</span>'
+                      f'<span>{SHARE} {_n(wpost.get("shares"))}</span>'
+                      f'<span class="wdate">{wpost["date"]}</span></span></a>')
+        badge = '<a class="pjbadge" href="https://www.juicer.io/api?utm_source=political-pulse&utm_medium=referral&utm_campaign=wall-badge">powered by Juicer</a>'
+        return (f'<h2>Latest posts {badge}</h2><div class="wall">{cards}</div>'
+                f'<p class="na">Newest posts from their official X account, ingested by a live Juicer feed.</p>')
+
     for x in AUP:
         w = x.get("wiki_14d")
         color = AU_COLORS.get(x["party"], IND)
@@ -560,6 +601,7 @@ One list, every party, identical methodology. No selections, no exclusions.</p>
 <div class="metric"><div class="k">Rank in Parliament</div><div class="v num">#{ranked_au.index(x) + 1}</div>
 <div class="d">of {len(AUP)} members by attention</div></div></div>
 {f'<div class="card"><b>Wikipedia attention, daily</b><br>{spark(x)}</div>' if x.get("wiki_daily") else ''}
+{au_wall(x, color)}
 <div style="margin-top:20px">{claim_cta(x["name"])}</div>"""
         (SITE / "p" / f"{x['slug']}.html").write_text(page(f"{x['name']}: attention tracker",
             f"Public attention profile for {x['name']}, Australian Parliament.", body, depth=1))
